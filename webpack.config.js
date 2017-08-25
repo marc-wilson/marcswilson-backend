@@ -1,8 +1,9 @@
 module.exports = {
-    entry: './src/server',
+    plugins: [],
+    entry: './src/server.js',
     output: {
         path: __dirname + '/dist',
-        filename: 'server.js'
+        filename: 'servers.js'
     },
     target: 'node'
 };

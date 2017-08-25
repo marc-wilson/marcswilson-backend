@@ -53,7 +53,7 @@ export class TimeTrackerApi {
         });
         module.exports = this._router;
     }
-    addCompany(company): Promise<any> {
+    addCompany(company): Promise<Array<any>> {
         return new Promise( (resolve, reject) => {
             this._mongodb.connect(this._DB_PATH, (connectionError, db) => {
                 const collection = db.collection('companies');
@@ -63,7 +63,9 @@ export class TimeTrackerApi {
                 } else {
                     collection.insert({name: company.name}).then( response => {
                         db.close();
-                        resolve(response);
+                        this.getCompanies().then( companies => {
+                            resolve(companies);
+                        });
                     }, error => {
                         db.close();
                         reject(error);
