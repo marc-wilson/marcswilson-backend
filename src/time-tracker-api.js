@@ -67,7 +67,9 @@ var TimeTrackerApi = (function () {
                 else {
                     collection.insert({ name: company.name }).then(function (response) {
                         db.close();
-                        resolve(response);
+                        _this.getCompanies().then(function (companies) {
+                            resolve(companies);
+                        });
                     }, function (error) {
                         db.close();
                         reject(error);
