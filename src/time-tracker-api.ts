@@ -15,7 +15,7 @@ export class TimeTrackerApi {
                 response.json(error);
             });
         });
-        this._router.post('/company/addproject', (request, response) => {
+        this._router.post('/addproject', (request, response) => {
             this.addProject(request.body.company, request.body.project).then( result => {
                 response.json(result);
             }, error => {
@@ -109,7 +109,11 @@ export class TimeTrackerApi {
                     const collection = db.collection('projects');
                     collection.insert({companyId: company._id, name: project.name}).then( response => {
                         db.close();
-                        resolve(response);
+                        this.getProjectsByCompanyId(company).then( projects => {
+                            resolve(projects);
+                        }, error => {
+                            reject(error);
+                        });
                     });
                 }
             });
@@ -117,22 +121,48 @@ export class TimeTrackerApi {
     }
     getCompanies(): Promise<Array<any>> {
         return new Promise( (resolve, reject) => {
+            // this._mongodb.connect(this._DB_PATH, (connectionError, db) => {
+            //     const collection = db.collection('companies');
+            //     if (connectionError) {
+            //         reject(connectionError);
+            //     } else {
+            //         collection.find().toArray( (queryError, docs) => {
+            //             if (queryError) {
+            //                 db.close();
+            //                 reject(queryError);
+            //             } else {
+            //                 db.close();
+            //                 resolve(docs);
+            //             }
+            //         });
+            //     }
+            // });
             this._mongodb.connect(this._DB_PATH, (connectionError, db) => {
-                const collection = db.collection('companies');
                 if (connectionError) {
                     reject(connectionError);
+                    db.close();
                 } else {
-                    collection.find().toArray( (queryError, docs) => {
+                    const collection = db.collection('companies');
+                    collection.aggregate([
+                        {
+                            $lookup: {
+                                from: 'projects',
+                                localField: '_id',
+                                foreignField: 'companyId',
+                                as: 'found_items'
+                            }
+                        }
+                    ]).toArray( (queryError, docs) => {
                         if (queryError) {
-                            db.close();
                             reject(queryError);
-                        } else {
                             db.close();
+                        } else {
                             resolve(docs);
+                            db.close();
                         }
                     });
                 }
-            });
+            })
         });
     }
     getProjectsByCompanyId(companyId): Promise<any> {

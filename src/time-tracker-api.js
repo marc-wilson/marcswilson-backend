@@ -17,7 +17,7 @@ var TimeTrackerApi = (function () {
                 response.json(error);
             });
         });
-        this._router.post('/company/addproject', function (request, response) {
+        this._router.post('/addproject', function (request, response) {
             _this.addProject(request.body.company, request.body.project).then(function (result) {
                 response.json(result);
             }, function (error) {
@@ -117,7 +117,11 @@ var TimeTrackerApi = (function () {
                     var collection = db.collection('projects');
                     collection.insert({ companyId: company._id, name: project.name }).then(function (response) {
                         db.close();
-                        resolve(response);
+                        _this.getProjectsByCompanyId(company).then(function (projects) {
+                            resolve(projects);
+                        }, function (error) {
+                            reject(error);
+                        });
                     });
                 }
             });
@@ -126,20 +130,46 @@ var TimeTrackerApi = (function () {
     TimeTrackerApi.prototype.getCompanies = function () {
         var _this = this;
         return new Promise(function (resolve, reject) {
+            // this._mongodb.connect(this._DB_PATH, (connectionError, db) => {
+            //     const collection = db.collection('companies');
+            //     if (connectionError) {
+            //         reject(connectionError);
+            //     } else {
+            //         collection.find().toArray( (queryError, docs) => {
+            //             if (queryError) {
+            //                 db.close();
+            //                 reject(queryError);
+            //             } else {
+            //                 db.close();
+            //                 resolve(docs);
+            //             }
+            //         });
+            //     }
+            // });
             _this._mongodb.connect(_this._DB_PATH, function (connectionError, db) {
-                var collection = db.collection('companies');
                 if (connectionError) {
                     reject(connectionError);
+                    db.close();
                 }
                 else {
-                    collection.find().toArray(function (queryError, docs) {
+                    var collection = db.collection('companies');
+                    collection.aggregate([
+                        {
+                            $lookup: {
+                                from: 'projects',
+                                localField: '_id',
+                                foreignField: 'companyId',
+                                as: 'found_items'
+                            }
+                        }
+                    ]).toArray(function (queryError, docs) {
                         if (queryError) {
-                            db.close();
                             reject(queryError);
+                            db.close();
                         }
                         else {
-                            db.close();
                             resolve(docs);
+                            db.close();
                         }
                     });
                 }
