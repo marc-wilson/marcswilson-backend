@@ -22,6 +22,13 @@ export class TimeTrackerApi {
                 response.json(error);
             });
         });
+        this._router.post('/project/addentry', (request, response) => {
+            this.addEntry(request.body.entry).then( result => {
+                response.json(result);
+            }, error => {
+                response.json(error);
+            });
+        });
         this._router.get('/companies', (request, response) => {
             this.getCompanies().then(companies => {
                 response.json(companies);
@@ -36,13 +43,6 @@ export class TimeTrackerApi {
                 response.json(error);
             });
         });
-        this._router.post('/project/addentry', (request, response) => {
-            this.addEntry(request.body.entry).then( result => {
-                response.json(result);
-            }, error => {
-                response.json(error);
-            });
-        });
         this._router.get('/company/entries/:companyId', (request, response) => {
             const companyId = request.params.companyId;
             this.getEntriesByCompanyId(companyId).then( entries => {
@@ -50,6 +50,14 @@ export class TimeTrackerApi {
             }, error => {
                 response.json(error);
             });
+        });
+        this._router.get('/projects/:companyId', (request, response) => {
+            const companyId = request.params.companyId;
+            this.getProjectsByCompanyId(companyId).then( resp => {
+                response.json(resp);
+            }, error => {
+                response.error(error);
+            })
         });
         module.exports = this._router;
     }
@@ -61,7 +69,7 @@ export class TimeTrackerApi {
                     db.close();
                     reject(connectionError);
                 } else {
-                    collection.insert({name: company.name}).then( response => {
+                    collection.insert({ name: company.name }).then( response => {
                         db.close();
                         this.getCompanies().then( companies => {
                             resolve(companies);
@@ -121,48 +129,48 @@ export class TimeTrackerApi {
     }
     getCompanies(): Promise<Array<any>> {
         return new Promise( (resolve, reject) => {
-            // this._mongodb.connect(this._DB_PATH, (connectionError, db) => {
-            //     const collection = db.collection('companies');
-            //     if (connectionError) {
-            //         reject(connectionError);
-            //     } else {
-            //         collection.find().toArray( (queryError, docs) => {
-            //             if (queryError) {
-            //                 db.close();
-            //                 reject(queryError);
-            //             } else {
-            //                 db.close();
-            //                 resolve(docs);
-            //             }
-            //         });
-            //     }
-            // });
             this._mongodb.connect(this._DB_PATH, (connectionError, db) => {
+                const collection = db.collection('companies');
                 if (connectionError) {
                     reject(connectionError);
-                    db.close();
                 } else {
-                    const collection = db.collection('companies');
-                    collection.aggregate([
-                        {
-                            $lookup: {
-                                from: 'projects',
-                                localField: '_id',
-                                foreignField: 'companyId',
-                                as: 'found_items'
-                            }
-                        }
-                    ]).toArray( (queryError, docs) => {
+                    collection.find().toArray( (queryError, docs) => {
                         if (queryError) {
+                            db.close();
                             reject(queryError);
-                            db.close();
                         } else {
-                            resolve(docs);
                             db.close();
+                            resolve(docs);
                         }
                     });
                 }
-            })
+            });
+            // this._mongodb.connect(this._DB_PATH, (connectionError, db) => {
+            //     if (connectionError) {
+            //         reject(connectionError);
+            //         db.close();
+            //     } else {
+            //         const collection = db.collection('companies');
+            //         collection.aggregate([
+            //             {
+            //                 $lookup: {
+            //                     from: 'projects',
+            //                     localField: '_id',
+            //                     foreignField: 'companyId',
+            //                     as: 'projects'
+            //                 }
+            //             }
+            //         ]).toArray( (queryError, docs) => {
+            //             if (queryError) {
+            //                 reject(queryError);
+            //                 db.close();
+            //             } else {
+            //                 resolve(docs);
+            //                 db.close();
+            //             }
+            //         });
+            //     }
+            // })
         });
     }
     getProjectsByCompanyId(companyId): Promise<any> {

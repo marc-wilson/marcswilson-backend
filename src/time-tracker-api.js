@@ -24,6 +24,13 @@ var TimeTrackerApi = (function () {
                 response.json(error);
             });
         });
+        this._router.post('/project/addentry', function (request, response) {
+            _this.addEntry(request.body.entry).then(function (result) {
+                response.json(result);
+            }, function (error) {
+                response.json(error);
+            });
+        });
         this._router.get('/companies', function (request, response) {
             _this.getCompanies().then(function (companies) {
                 response.json(companies);
@@ -38,19 +45,20 @@ var TimeTrackerApi = (function () {
                 response.json(error);
             });
         });
-        this._router.post('/project/addentry', function (request, response) {
-            _this.addEntry(request.body.entry).then(function (result) {
-                response.json(result);
-            }, function (error) {
-                response.json(error);
-            });
-        });
         this._router.get('/company/entries/:companyId', function (request, response) {
             var companyId = request.params.companyId;
             _this.getEntriesByCompanyId(companyId).then(function (entries) {
                 response.json(entries);
             }, function (error) {
                 response.json(error);
+            });
+        });
+        this._router.get('/projects/:companyId', function (request, response) {
+            var companyId = request.params.companyId;
+            _this.getProjectsByCompanyId(companyId).then(function (resp) {
+                response.json(resp);
+            }, function (error) {
+                response.error(error);
             });
         });
         module.exports = this._router;
@@ -130,50 +138,50 @@ var TimeTrackerApi = (function () {
     TimeTrackerApi.prototype.getCompanies = function () {
         var _this = this;
         return new Promise(function (resolve, reject) {
-            // this._mongodb.connect(this._DB_PATH, (connectionError, db) => {
-            //     const collection = db.collection('companies');
-            //     if (connectionError) {
-            //         reject(connectionError);
-            //     } else {
-            //         collection.find().toArray( (queryError, docs) => {
-            //             if (queryError) {
-            //                 db.close();
-            //                 reject(queryError);
-            //             } else {
-            //                 db.close();
-            //                 resolve(docs);
-            //             }
-            //         });
-            //     }
-            // });
             _this._mongodb.connect(_this._DB_PATH, function (connectionError, db) {
+                var collection = db.collection('companies');
                 if (connectionError) {
                     reject(connectionError);
-                    db.close();
                 }
                 else {
-                    var collection = db.collection('companies');
-                    collection.aggregate([
-                        {
-                            $lookup: {
-                                from: 'projects',
-                                localField: '_id',
-                                foreignField: 'companyId',
-                                as: 'found_items'
-                            }
-                        }
-                    ]).toArray(function (queryError, docs) {
+                    collection.find().toArray(function (queryError, docs) {
                         if (queryError) {
-                            reject(queryError);
                             db.close();
+                            reject(queryError);
                         }
                         else {
-                            resolve(docs);
                             db.close();
+                            resolve(docs);
                         }
                     });
                 }
             });
+            // this._mongodb.connect(this._DB_PATH, (connectionError, db) => {
+            //     if (connectionError) {
+            //         reject(connectionError);
+            //         db.close();
+            //     } else {
+            //         const collection = db.collection('companies');
+            //         collection.aggregate([
+            //             {
+            //                 $lookup: {
+            //                     from: 'projects',
+            //                     localField: '_id',
+            //                     foreignField: 'companyId',
+            //                     as: 'projects'
+            //                 }
+            //             }
+            //         ]).toArray( (queryError, docs) => {
+            //             if (queryError) {
+            //                 reject(queryError);
+            //                 db.close();
+            //             } else {
+            //                 resolve(docs);
+            //                 db.close();
+            //             }
+            //         });
+            //     }
+            // })
         });
     };
     TimeTrackerApi.prototype.getProjectsByCompanyId = function (companyId) {

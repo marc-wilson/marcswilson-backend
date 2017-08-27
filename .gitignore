@@ -60,3 +60,4 @@ typings/
 /server.env
 *.js.map
 *.js
+*.idea/*
