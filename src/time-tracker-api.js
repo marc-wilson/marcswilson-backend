@@ -24,8 +24,8 @@ var TimeTrackerApi = (function () {
                 response.json(error);
             });
         });
-        this._router.post('/project/addentry', function (request, response) {
-            _this.addEntry(request.body.entry).then(function (result) {
+        this._router.post('/company/addentry', function (request, response) {
+            _this.addEntry(request.body.company, request.body.entry).then(function (result) {
                 response.json(result);
             }, function (error) {
                 response.json(error);
@@ -53,14 +53,6 @@ var TimeTrackerApi = (function () {
                 response.json(error);
             });
         });
-        this._router.get('/projects/:companyId', function (request, response) {
-            var companyId = request.params.companyId;
-            _this.getProjectsByCompanyId(companyId).then(function (resp) {
-                response.json(resp);
-            }, function (error) {
-                response.error(error);
-            });
-        });
         module.exports = this._router;
     }
     TimeTrackerApi.prototype.addCompany = function (company) {
@@ -86,7 +78,7 @@ var TimeTrackerApi = (function () {
             });
         });
     };
-    TimeTrackerApi.prototype.addEntry = function (entry) {
+    TimeTrackerApi.prototype.addEntry = function (company, entry) {
         var _this = this;
         return new Promise(function (resolve, reject) {
             _this._mongodb.connect(_this._DB_PATH, function (connectionError, db) {
@@ -98,8 +90,8 @@ var TimeTrackerApi = (function () {
                 else {
                     collection.insert({
                         date: entry.date,
-                        projectId: entry.projectId,
-                        companyId: entry.companyId,
+                        project: entry.project,
+                        companyId: company._id,
                         description: entry.description,
                         timeSpent: entry.timeSpent
                     }).then(function (response) {
@@ -125,7 +117,7 @@ var TimeTrackerApi = (function () {
                     var collection = db.collection('projects');
                     collection.insert({ companyId: company._id, name: project.name }).then(function (response) {
                         db.close();
-                        _this.getProjectsByCompanyId(company).then(function (projects) {
+                        _this.getProjectsByCompanyId(company._id).then(function (projects) {
                             resolve(projects);
                         }, function (error) {
                             reject(error);

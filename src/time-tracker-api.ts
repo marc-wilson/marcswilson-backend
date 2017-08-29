@@ -22,8 +22,8 @@ export class TimeTrackerApi {
                 response.json(error);
             });
         });
-        this._router.post('/project/addentry', (request, response) => {
-            this.addEntry(request.body.entry).then( result => {
+        this._router.post('/company/addentry', (request, response) => {
+            this.addEntry(request.body.company, request.body.entry).then( result => {
                 response.json(result);
             }, error => {
                 response.json(error);
@@ -51,14 +51,7 @@ export class TimeTrackerApi {
                 response.json(error);
             });
         });
-        this._router.get('/projects/:companyId', (request, response) => {
-            const companyId = request.params.companyId;
-            this.getProjectsByCompanyId(companyId).then( resp => {
-                response.json(resp);
-            }, error => {
-                response.error(error);
-            })
-        });
+
         module.exports = this._router;
     }
     addCompany(company): Promise<Array<any>> {
@@ -82,7 +75,7 @@ export class TimeTrackerApi {
             });
         });
     }
-    addEntry(entry): Promise<any> {
+    addEntry(company, entry): Promise<any> {
         return new Promise( (resolve, reject) => {
             this._mongodb.connect(this._DB_PATH, (connectionError, db) => {
                 const collection = db.collection('entries');
@@ -92,8 +85,8 @@ export class TimeTrackerApi {
                 } else {
                     collection.insert({
                         date: entry.date,
-                        projectId: entry.projectId,
-                        companyId: entry.companyId,
+                        project: entry.project,
+                        companyId: company._id,
                         description: entry.description,
                         timeSpent: entry.timeSpent
                     }).then( response => {
@@ -117,7 +110,7 @@ export class TimeTrackerApi {
                     const collection = db.collection('projects');
                     collection.insert({companyId: company._id, name: project.name}).then( response => {
                         db.close();
-                        this.getProjectsByCompanyId(company).then( projects => {
+                        this.getProjectsByCompanyId(company._id).then( projects => {
                             resolve(projects);
                         }, error => {
                             reject(error);
