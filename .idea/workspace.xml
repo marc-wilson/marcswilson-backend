@@ -28,16 +28,14 @@
       <file leaf-file-name="time-tracker-api.ts" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/time-tracker-api.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="834">
-              <caret line="167" column="5" lean-forward="true" selection-start-line="167" selection-start-column="5" selection-end-line="167" selection-end-column="5" />
+            <state relative-caret-position="663">
+              <caret line="97" column="27" lean-forward="false" selection-start-line="97" selection-start-column="27" selection-end-line="97" selection-end-column="27" />
               <folding>
                 <element signature="e#429#627#0" expanded="false" />
                 <element signature="e#694#914#0" expanded="false" />
                 <element signature="e#1528#1745#0" expanded="false" />
                 <element signature="e#1827#2083#0" expanded="false" />
                 <element signature="n#!!block;n#addCompany#0;n#TimeTrackerApi#0" expanded="false" />
-                <element signature="n#!!block;n#addEntry#0;n#TimeTrackerApi#0" expanded="false" />
-                <element signature="n#!!block;n#addProject#0;n#TimeTrackerApi#0" expanded="false" />
                 <element signature="n#!!block;n#getCompanies#0;n#TimeTrackerApi#0" expanded="false" />
                 <element signature="n#!!block;n#getProjectsByCompanyId#0;n#TimeTrackerApi#0" expanded="false" />
                 <element signature="n#!!block;n#getEntriesByCompanyId#0;n#TimeTrackerApi#0" expanded="false" />
@@ -101,7 +99,7 @@
   <component name="NodeModulesDirectoryManager">
     <handled-path value="$PROJECT_DIR$/node_modules" />
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="-12" />
     <option name="y" value="-12" />
     <option name="width" value="3864" />
@@ -124,7 +122,6 @@
     </navigator>
     <panes>
       <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -141,6 +138,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -251,12 +249,13 @@
       <workItem from="1503869040355" duration="7168000" />
       <workItem from="1503963250377" duration="522000" />
       <workItem from="1503963790421" duration="46000" />
-      <workItem from="1503964098929" duration="5226000" />
+      <workItem from="1503964098929" duration="5309000" />
+      <workItem from="1504051153308" duration="2829000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="31869000" />
+    <option name="totallyTimeSpent" value="34781000" />
   </component>
   <component name="TodoView" selected-index="3">
     <todo-panel id="selected-file">
@@ -268,19 +267,20 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-12" y="-12" width="3864" height="2132" extended-state="6" />
+    <frame x="-12" y="-12" width="3864" height="2132" extended-state="7" />
+    <editor active="true" />
     <layout>
       <window_info id="TypeScript" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32968834" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24960127" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32950193" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.399137" sideWeight="0.5063796" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32950193" sideWeight="0.49574694" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.39901477" sideWeight="0.50744283" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32950193" sideWeight="0.49574694" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Mongo Explorer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33333334" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3137755" sideWeight="0.49767154" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.399137" sideWeight="0.49362043" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Mongo Explorer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33678895" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3136289" sideWeight="0.49548113" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.39901477" sideWeight="0.49255714" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -336,7 +336,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="41" />
+      <option name="time" value="43" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -358,8 +358,6 @@
             <element signature="e#1528#1745#0" expanded="false" />
             <element signature="e#1827#2083#0" expanded="false" />
             <element signature="n#!!block;n#addCompany#0;n#TimeTrackerApi#0" expanded="false" />
-            <element signature="n#!!block;n#addEntry#0;n#TimeTrackerApi#0" expanded="false" />
-            <element signature="n#!!block;n#addProject#0;n#TimeTrackerApi#0" expanded="false" />
             <element signature="n#!!block;n#getCompanies#0;n#TimeTrackerApi#0" expanded="false" />
             <element signature="n#!!block;n#getProjectsByCompanyId#0;n#TimeTrackerApi#0" expanded="false" />
             <element signature="n#!!block;n#getEntriesByCompanyId#0;n#TimeTrackerApi#0" expanded="false" />
@@ -384,8 +382,6 @@
             <element signature="e#1528#1745#0" expanded="false" />
             <element signature="e#1827#2083#0" expanded="false" />
             <element signature="n#!!block;n#addCompany#0;n#TimeTrackerApi#0" expanded="false" />
-            <element signature="n#!!block;n#addEntry#0;n#TimeTrackerApi#0" expanded="false" />
-            <element signature="n#!!block;n#addProject#0;n#TimeTrackerApi#0" expanded="false" />
             <element signature="n#!!block;n#getCompanies#0;n#TimeTrackerApi#0" expanded="false" />
             <element signature="n#!!block;n#getProjectsByCompanyId#0;n#TimeTrackerApi#0" expanded="false" />
             <element signature="n#!!block;n#getEntriesByCompanyId#0;n#TimeTrackerApi#0" expanded="false" />
@@ -403,8 +399,6 @@
             <element signature="e#1528#1745#0" expanded="false" />
             <element signature="e#1827#2083#0" expanded="false" />
             <element signature="n#!!block;n#addCompany#0;n#TimeTrackerApi#0" expanded="false" />
-            <element signature="n#!!block;n#addEntry#0;n#TimeTrackerApi#0" expanded="false" />
-            <element signature="n#!!block;n#addProject#0;n#TimeTrackerApi#0" expanded="false" />
             <element signature="n#!!block;n#getCompanies#0;n#TimeTrackerApi#0" expanded="false" />
             <element signature="n#!!block;n#getProjectsByCompanyId#0;n#TimeTrackerApi#0" expanded="false" />
             <element signature="n#!!block;n#getEntriesByCompanyId#0;n#TimeTrackerApi#0" expanded="false" />
@@ -699,16 +693,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/time-tracker-api.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="834">
-          <caret line="167" column="5" lean-forward="true" selection-start-line="167" selection-start-column="5" selection-end-line="167" selection-end-column="5" />
+        <state relative-caret-position="663">
+          <caret line="97" column="27" lean-forward="false" selection-start-line="97" selection-start-column="27" selection-end-line="97" selection-end-column="27" />
           <folding>
             <element signature="e#429#627#0" expanded="false" />
             <element signature="e#694#914#0" expanded="false" />
             <element signature="e#1528#1745#0" expanded="false" />
             <element signature="e#1827#2083#0" expanded="false" />
             <element signature="n#!!block;n#addCompany#0;n#TimeTrackerApi#0" expanded="false" />
-            <element signature="n#!!block;n#addEntry#0;n#TimeTrackerApi#0" expanded="false" />
-            <element signature="n#!!block;n#addProject#0;n#TimeTrackerApi#0" expanded="false" />
             <element signature="n#!!block;n#getCompanies#0;n#TimeTrackerApi#0" expanded="false" />
             <element signature="n#!!block;n#getProjectsByCompanyId#0;n#TimeTrackerApi#0" expanded="false" />
             <element signature="n#!!block;n#getEntriesByCompanyId#0;n#TimeTrackerApi#0" expanded="false" />

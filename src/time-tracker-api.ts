@@ -91,7 +91,11 @@ export class TimeTrackerApi {
                         timeSpent: entry.timeSpent
                     }).then( response => {
                         db.close();
-                        resolve(response);
+                        this.getEntriesByCompanyId(company._id).then( entries => {
+                            resolve(entries);
+                        }, error => {
+                            reject(error);
+                        });
                     }, error => {
                         db.close();
                         reject(error);

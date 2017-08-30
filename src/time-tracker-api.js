@@ -96,7 +96,11 @@ var TimeTrackerApi = (function () {
                         timeSpent: entry.timeSpent
                     }).then(function (response) {
                         db.close();
-                        resolve(response);
+                        _this.getEntriesByCompanyId(company._id).then(function (entries) {
+                            resolve(entries);
+                        }, function (error) {
+                            reject(error);
+                        });
                     }, function (error) {
                         db.close();
                         reject(error);
