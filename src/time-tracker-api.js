@@ -7,8 +7,10 @@ var TimeTrackerApi = (function () {
         this._router = null;
         this._mongodb = null;
         this._DB_PATH = 'mongodb://localhost:27017/timetrackerdb';
+        this._objectId = null;
         this._express = require('express');
         this._mongodb = require('mongodb').MongoClient;
+        this._objectId = require('mongodb').ObjectId;
         this._router = this._express.Router();
         this._router.post('/addcompany', function (request, response) {
             _this.addCompany(request.body.company).then(function (result) {
@@ -51,6 +53,15 @@ var TimeTrackerApi = (function () {
                 response.json(entries);
             }, function (error) {
                 response.json(error);
+            });
+        });
+        this._router.get('/company/:companyId/entries/:entryId/delete', function (request, response) {
+            var companyId = request.params.companyId;
+            var entryId = request.params.entryId;
+            _this.deleteEntry(entryId, companyId).then(function (entries) {
+                response.json(entries);
+            }, function (error) {
+                response.error(error);
             });
         });
         module.exports = this._router;
@@ -221,6 +232,29 @@ var TimeTrackerApi = (function () {
                     }, function (error) {
                         db.close();
                         reject(error);
+                    });
+                }
+            });
+        });
+    };
+    TimeTrackerApi.prototype.deleteEntry = function (entryId, companyId) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            _this._mongodb.connect(_this._DB_PATH, function (connectionError, db) {
+                var collection = db.collection('entries');
+                if (connectionError) {
+                    reject(connectionError);
+                    db.close();
+                }
+                else {
+                    collection.remove({ _id: _this._objectId(entryId) }).then(function (result) {
+                        if (result) {
+                            _this.getEntriesByCompanyId(companyId).then(function (docs) {
+                                resolve(docs);
+                            }, function (error) {
+                                reject(error);
+                            });
+                        }
                     });
                 }
             });

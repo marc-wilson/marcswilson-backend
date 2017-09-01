@@ -3,10 +3,12 @@ export class TimeTrackerApi {
     private _router: any = null;
     private _mongodb: any = null;
     private _DB_PATH = 'mongodb://localhost:27017/timetrackerdb';
+    private _objectId: any = null;
 
     constructor() {
         this._express = require('express');
         this._mongodb = require('mongodb').MongoClient;
+        this._objectId = require('mongodb').ObjectId;
         this._router = this._express.Router();
         this._router.post('/addcompany', (request, response) => {
             this.addCompany(request.body.company).then( result => {
@@ -50,6 +52,15 @@ export class TimeTrackerApi {
             }, error => {
                 response.json(error);
             });
+        });
+        this._router.get('/company/:companyId/entries/:entryId/delete', (request, response) => {
+            const companyId = request.params.companyId;
+            const entryId = request.params.entryId;
+            this.deleteEntry(entryId, companyId).then( entries => {
+                response.json(entries);
+            }, error => {
+                response.error(error);
+            })
         });
 
         module.exports = this._router;
@@ -209,6 +220,27 @@ export class TimeTrackerApi {
                     });
                 }
             });
+        });
+    }
+    deleteEntry(entryId: string, companyId: string): Promise<any> {
+        return new Promise( (resolve, reject) => {
+            this._mongodb.connect(this._DB_PATH, (connectionError, db) => {
+                const collection = db.collection('entries');
+                if (connectionError) {
+                    reject(connectionError);
+                    db.close();
+                } else {
+                    collection.remove({_id: this._objectId(entryId)}).then( result => {
+                        if (result) {
+                            this.getEntriesByCompanyId(companyId).then( docs => {
+                                resolve(docs);
+                            }, error => {
+                                reject(error);
+                            })
+                        }
+                    })
+                }
+            })
         });
     }
 }
