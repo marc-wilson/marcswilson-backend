@@ -31,6 +31,13 @@ export class TimeTrackerApi {
                 response.json(error);
             });
         });
+        this._router.post('/company/updateentry', (request, response) => {
+            this.updateEntry(request.body.company, request.body.entry).then( result => {
+                response.json(result);
+            }, error => {
+                response.error(error);
+            });
+        })
         this._router.get('/companies', (request, response) => {
             this.getCompanies().then(companies => {
                 response.json(companies);
@@ -133,6 +140,40 @@ export class TimeTrackerApi {
                     });
                 }
             });
+        });
+    }
+    updateEntry(company, entry): Promise<any> {
+        return new Promise( (resolve, reject) => {
+            this._mongodb.connect(this._DB_PATH, (connectionError, db) => {
+                const collection = db.collection('entries');
+                if (connectionError) {
+                    reject(connectionError);
+                    db.close();
+                } else {
+                    collection.update(
+                        {
+                            _id: this._objectId(entry._id)
+                        },
+                        {
+                            date: entry.date,
+                            project: entry.project,
+                            companyId: company._id,
+                            description: entry.description,
+                            timeSpent: entry.timeSpent
+                        }
+                    ).then( result => {
+                        if (result) {
+                            this.getEntriesByCompanyId(company._id).then( _entries => {
+                                resolve(_entries);
+                            }, error => {
+                                reject(error);
+                            });
+                        }
+                    }, error => {
+                        reject(error);
+                    })
+                }
+            })
         });
     }
     getCompanies(): Promise<Array<any>> {

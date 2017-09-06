@@ -33,6 +33,13 @@ var TimeTrackerApi = (function () {
                 response.json(error);
             });
         });
+        this._router.post('/company/updateentry', function (request, response) {
+            _this.updateEntry(request.body.company, request.body.entry).then(function (result) {
+                response.json(result);
+            }, function (error) {
+                response.error(error);
+            });
+        });
         this._router.get('/companies', function (request, response) {
             _this.getCompanies().then(function (companies) {
                 response.json(companies);
@@ -137,6 +144,39 @@ var TimeTrackerApi = (function () {
                         }, function (error) {
                             reject(error);
                         });
+                    });
+                }
+            });
+        });
+    };
+    TimeTrackerApi.prototype.updateEntry = function (company, entry) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            _this._mongodb.connect(_this._DB_PATH, function (connectionError, db) {
+                var collection = db.collection('entries');
+                if (connectionError) {
+                    reject(connectionError);
+                    db.close();
+                }
+                else {
+                    collection.update({
+                        _id: _this._objectId(entry._id)
+                    }, {
+                        date: entry.date,
+                        project: entry.project,
+                        companyId: company._id,
+                        description: entry.description,
+                        timeSpent: entry.timeSpent
+                    }).then(function (result) {
+                        if (result) {
+                            _this.getEntriesByCompanyId(company._id).then(function (_entries) {
+                                resolve(_entries);
+                            }, function (error) {
+                                reject(error);
+                            });
+                        }
+                    }, function (error) {
+                        reject(error);
                     });
                 }
             });

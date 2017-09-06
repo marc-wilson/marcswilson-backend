@@ -207,6 +207,7 @@ export class MlbStatsApi {
                     ]).toArray( (queryError, docs) => {
                         if (docs && docs.length > 0) {
                             const players: Array<any> = new Array<any>();
+                            // TODO: Find a better way to do this! MongoDB should have a better way to join documents from different collections
                             for (let i = 0; i < docs.length; i++) {
                                 docs[ i ].fielding = docs[ i ].fielding.filter( f => { return f.yearID === yearID && f.teamID === team.teamID; });
                                 docs[ i ].allstar = docs[ i ].allstar.filter( a => { return a.yearID === yearID; });
@@ -368,6 +369,7 @@ export class MlbStatsApi {
                     ]).toArray( (queryError, docs) => {
                         if (docs && docs.length > 0) {
                             const appearances: Array<any> = new Array<any>();
+                            // TODO: Find a better way to do this! MongoDB should have a better way to join documents from different collections
                             for (let i = 0; i < docs.length; i++) {
                                 docs[ i ].fielding = docs[ i ].fielding.filter( f => { return f.yearID === docs[i].yearID; });
                                 docs[ i ].allstar = docs[ i ].allstar.filter( a => { return a.yearID === docs[i].yearID; });

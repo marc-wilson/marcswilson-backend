@@ -3,6 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="900ed2e9-9ddd-4fbc-b80e-b9eecbe21c8a" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/mlb-stats-api.js" afterPath="$PROJECT_DIR$/src/mlb-stats-api.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/mlb-stats-api.js.map" afterPath="$PROJECT_DIR$/src/mlb-stats-api.js.map" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/mlb-stats-api.ts" afterPath="$PROJECT_DIR$/src/mlb-stats-api.ts" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/time-tracker-api.js" afterPath="$PROJECT_DIR$/src/time-tracker-api.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/time-tracker-api.js.map" afterPath="$PROJECT_DIR$/src/time-tracker-api.js.map" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/time-tracker-api.ts" afterPath="$PROJECT_DIR$/src/time-tracker-api.ts" />
@@ -25,25 +28,34 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="525">
-      <file leaf-file-name="time-tracker-api.ts" pinned="false" current-in-tab="true">
+      <file leaf-file-name="time-tracker-api.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/time-tracker-api.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="729">
-              <caret line="235" column="32" lean-forward="false" selection-start-line="235" selection-start-column="32" selection-end-line="235" selection-end-column="32" />
+            <state relative-caret-position="819">
+              <caret line="161" column="37" lean-forward="false" selection-start-line="161" selection-start-column="37" selection-end-line="161" selection-end-column="37" />
               <folding>
                 <element signature="e#518#716#0" expanded="false" />
                 <element signature="e#783#1003#0" expanded="false" />
-                <element signature="e#1076#1292#0" expanded="false" />
-                <element signature="e#1357#1542#0" expanded="false" />
-                <element signature="e#1617#1834#0" expanded="false" />
+                <element signature="e#1652#1837#0" expanded="false" />
+                <element signature="e#1912#2129#0" expanded="false" />
+                <element signature="e#2211#2467#0" expanded="false" />
+                <element signature="e#2565#2872#0" expanded="false" />
                 <element signature="n#!!block;n#addCompany#0;n#TimeTrackerApi#0" expanded="false" />
                 <element signature="n#!!block;n#addEntry#0;n#TimeTrackerApi#0" expanded="false" />
                 <element signature="n#!!block;n#addProject#0;n#TimeTrackerApi#0" expanded="false" />
                 <element signature="n#!!block;n#getCompanies#0;n#TimeTrackerApi#0" expanded="false" />
                 <element signature="n#!!block;n#getProjectsByCompanyId#0;n#TimeTrackerApi#0" expanded="false" />
                 <element signature="n#!!block;n#getEntriesByCompanyId#0;n#TimeTrackerApi#0" expanded="false" />
+                <element signature="n#!!block;n#deleteEntry#0;n#TimeTrackerApi#0" expanded="false" />
               </folding>
             </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="marcswilson/timetrackerdb/entries" pinned="false" current-in-tab="true">
+        <entry file="mongo://marcswilson/timetrackerdb/entries">
+          <provider selected="true" editor-type-id="MongoData">
+            <state />
           </provider>
         </entry>
       </file>
@@ -71,7 +83,6 @@
       <list>
         <option value="$PROJECT_DIR$/src/server.js" />
         <option value="$PROJECT_DIR$/dist/server.js" />
-        <option value="$PROJECT_DIR$/src/mlb-stats-api.ts" />
         <option value="$PROJECT_DIR$/src/powerball-api.ts" />
         <option value="$PROJECT_DIR$/src/auth-api.ts" />
         <option value="$PROJECT_DIR$/src/email-api.ts" />
@@ -82,6 +93,7 @@
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/webpack.config.ts" />
         <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/src/mlb-stats-api.ts" />
         <option value="$PROJECT_DIR$/src/time-tracker-api.ts" />
       </list>
     </option>
@@ -103,7 +115,7 @@
     <handled-path value="$PROJECT_DIR$/node_modules" />
   </component>
   <component name="ProjectFrameBounds" extendedState="7">
-    <option name="x" value="-12" />
+    <option name="x" value="3828" />
     <option name="y" value="-12" />
     <option name="width" value="3864" />
     <option name="height" value="2132" />
@@ -124,7 +136,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -141,7 +153,7 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -257,12 +269,14 @@
       <workItem from="1504139030953" duration="606000" />
       <workItem from="1504139686023" duration="34000" />
       <workItem from="1504141095941" duration="2264000" />
-      <workItem from="1504227362534" duration="2692000" />
+      <workItem from="1504227362534" duration="2728000" />
+      <workItem from="1504661851894" duration="110000" />
+      <workItem from="1504661973222" duration="3083000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="41004000" />
+    <option name="totallyTimeSpent" value="44233000" />
   </component>
   <component name="TodoView" selected-index="3">
     <todo-panel id="selected-file">
@@ -274,19 +288,19 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-12" y="-12" width="3864" height="2132" extended-state="7" />
+    <frame x="3828" y="-12" width="3864" height="2132" extended-state="7" />
     <layout>
       <window_info id="TypeScript" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32968834" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24960127" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24960127" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32950193" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.39901477" sideWeight="0.51063263" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.39901477" sideWeight="0.5116959" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32950193" sideWeight="0.49893674" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32950193" sideWeight="0.49574694" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32950193" sideWeight="0.49893674" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Mongo Explorer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.13822435" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3127392" sideWeight="0.49016482" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.39901477" sideWeight="0.48936737" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Mongo Explorer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1408825" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3125342" sideWeight="0.486975" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.39901477" sideWeight="0.4883041" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -490,7 +504,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="50" />
+      <option name="time" value="56" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -502,15 +516,17 @@
           <folding>
             <element signature="e#518#716#0" expanded="false" />
             <element signature="e#783#1003#0" expanded="false" />
-            <element signature="e#1076#1292#0" expanded="false" />
-            <element signature="e#1357#1542#0" expanded="false" />
-            <element signature="e#1617#1834#0" expanded="false" />
+            <element signature="e#1652#1837#0" expanded="false" />
+            <element signature="e#1912#2129#0" expanded="false" />
+            <element signature="e#2211#2467#0" expanded="false" />
+            <element signature="e#2565#2872#0" expanded="false" />
             <element signature="n#!!block;n#addCompany#0;n#TimeTrackerApi#0" expanded="false" />
             <element signature="n#!!block;n#addEntry#0;n#TimeTrackerApi#0" expanded="false" />
             <element signature="n#!!block;n#addProject#0;n#TimeTrackerApi#0" expanded="false" />
             <element signature="n#!!block;n#getCompanies#0;n#TimeTrackerApi#0" expanded="false" />
             <element signature="n#!!block;n#getProjectsByCompanyId#0;n#TimeTrackerApi#0" expanded="false" />
             <element signature="n#!!block;n#getEntriesByCompanyId#0;n#TimeTrackerApi#0" expanded="false" />
+            <element signature="n#!!block;n#deleteEntry#0;n#TimeTrackerApi#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -529,15 +545,17 @@
           <folding>
             <element signature="e#518#716#0" expanded="false" />
             <element signature="e#783#1003#0" expanded="false" />
-            <element signature="e#1076#1292#0" expanded="false" />
-            <element signature="e#1357#1542#0" expanded="false" />
-            <element signature="e#1617#1834#0" expanded="false" />
+            <element signature="e#1652#1837#0" expanded="false" />
+            <element signature="e#1912#2129#0" expanded="false" />
+            <element signature="e#2211#2467#0" expanded="false" />
+            <element signature="e#2565#2872#0" expanded="false" />
             <element signature="n#!!block;n#addCompany#0;n#TimeTrackerApi#0" expanded="false" />
             <element signature="n#!!block;n#addEntry#0;n#TimeTrackerApi#0" expanded="false" />
             <element signature="n#!!block;n#addProject#0;n#TimeTrackerApi#0" expanded="false" />
             <element signature="n#!!block;n#getCompanies#0;n#TimeTrackerApi#0" expanded="false" />
             <element signature="n#!!block;n#getProjectsByCompanyId#0;n#TimeTrackerApi#0" expanded="false" />
             <element signature="n#!!block;n#getEntriesByCompanyId#0;n#TimeTrackerApi#0" expanded="false" />
+            <element signature="n#!!block;n#deleteEntry#0;n#TimeTrackerApi#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -549,15 +567,17 @@
           <folding>
             <element signature="e#518#716#0" expanded="false" />
             <element signature="e#783#1003#0" expanded="false" />
-            <element signature="e#1076#1292#0" expanded="false" />
-            <element signature="e#1357#1542#0" expanded="false" />
-            <element signature="e#1617#1834#0" expanded="false" />
+            <element signature="e#1652#1837#0" expanded="false" />
+            <element signature="e#1912#2129#0" expanded="false" />
+            <element signature="e#2211#2467#0" expanded="false" />
+            <element signature="e#2565#2872#0" expanded="false" />
             <element signature="n#!!block;n#addCompany#0;n#TimeTrackerApi#0" expanded="false" />
             <element signature="n#!!block;n#addEntry#0;n#TimeTrackerApi#0" expanded="false" />
             <element signature="n#!!block;n#addProject#0;n#TimeTrackerApi#0" expanded="false" />
             <element signature="n#!!block;n#getCompanies#0;n#TimeTrackerApi#0" expanded="false" />
             <element signature="n#!!block;n#getProjectsByCompanyId#0;n#TimeTrackerApi#0" expanded="false" />
             <element signature="n#!!block;n#getEntriesByCompanyId#0;n#TimeTrackerApi#0" expanded="false" />
+            <element signature="n#!!block;n#deleteEntry#0;n#TimeTrackerApi#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -833,13 +853,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/mlb-stats-api.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1528">
-          <caret line="71" column="24" lean-forward="false" selection-start-line="71" selection-start-column="24" selection-end-line="71" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-4779">
@@ -851,26 +864,43 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="704">
           <caret line="57" column="4" lean-forward="false" selection-start-line="57" selection-start-column="4" selection-end-line="57" selection-end-column="4" />
-          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mlb-stats-api.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="923">
+          <caret line="314" column="46" lean-forward="false" selection-start-line="314" selection-start-column="46" selection-end-line="314" selection-end-column="46" />
+          <folding>
+            <element signature="n#!!block;n#getDistinctYears#0;n#MlbStatsApi#0" expanded="false" />
+            <element signature="n#!!block;n#getTeamsByYear#0;n#MlbStatsApi#0" expanded="false" />
+            <element signature="n#!!block;n#getTeamByID#0;n#MlbStatsApi#0" expanded="false" />
+            <element signature="n#!!block;n#getBallparks#0;n#MlbStatsApi#0" expanded="false" />
+            <element signature="n#!!block;n#getBallparkByKey#0;n#MlbStatsApi#0" expanded="false" />
+            <element signature="n#!!block;n#getPlayersByName#0;n#MlbStatsApi#0" expanded="false" />
+            <element signature="n#!!block;n#getBoxScore#0;n#MlbStatsApi#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/time-tracker-api.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="729">
-          <caret line="235" column="32" lean-forward="false" selection-start-line="235" selection-start-column="32" selection-end-line="235" selection-end-column="32" />
+        <state relative-caret-position="819">
+          <caret line="161" column="37" lean-forward="false" selection-start-line="161" selection-start-column="37" selection-end-line="161" selection-end-column="37" />
           <folding>
             <element signature="e#518#716#0" expanded="false" />
             <element signature="e#783#1003#0" expanded="false" />
-            <element signature="e#1076#1292#0" expanded="false" />
-            <element signature="e#1357#1542#0" expanded="false" />
-            <element signature="e#1617#1834#0" expanded="false" />
+            <element signature="e#1652#1837#0" expanded="false" />
+            <element signature="e#1912#2129#0" expanded="false" />
+            <element signature="e#2211#2467#0" expanded="false" />
+            <element signature="e#2565#2872#0" expanded="false" />
             <element signature="n#!!block;n#addCompany#0;n#TimeTrackerApi#0" expanded="false" />
             <element signature="n#!!block;n#addEntry#0;n#TimeTrackerApi#0" expanded="false" />
             <element signature="n#!!block;n#addProject#0;n#TimeTrackerApi#0" expanded="false" />
             <element signature="n#!!block;n#getCompanies#0;n#TimeTrackerApi#0" expanded="false" />
             <element signature="n#!!block;n#getProjectsByCompanyId#0;n#TimeTrackerApi#0" expanded="false" />
             <element signature="n#!!block;n#getEntriesByCompanyId#0;n#TimeTrackerApi#0" expanded="false" />
+            <element signature="n#!!block;n#deleteEntry#0;n#TimeTrackerApi#0" expanded="false" />
           </folding>
         </state>
       </provider>

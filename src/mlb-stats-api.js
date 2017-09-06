@@ -216,6 +216,7 @@ var MlbStatsApi = (function () {
                     ]).toArray(function (queryError, docs) {
                         if (docs && docs.length > 0) {
                             var players = new Array();
+                            // TODO: Find a better way to do this! MongoDB should have a better way to join documents from different collections
                             for (var i = 0; i < docs.length; i++) {
                                 docs[i].fielding = docs[i].fielding.filter(function (f) { return f.yearID === yearID && f.teamID === team.teamID; });
                                 docs[i].allstar = docs[i].allstar.filter(function (a) { return a.yearID === yearID; });
@@ -395,6 +396,7 @@ var MlbStatsApi = (function () {
                                 docs[i].teams = docs[i].teams.filter(function (t) { return t.yearID === docs[i].yearID && t.teamID === docs[i].teamID; });
                                 appearances.push(docs[i]);
                             };
+                            // TODO: Find a better way to do this! MongoDB should have a better way to join documents from different collections
                             for (var i = 0; i < docs.length; i++) {
                                 _loop_1(i);
                             }
