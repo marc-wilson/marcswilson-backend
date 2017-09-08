@@ -2,7 +2,7 @@ import * as webpack from 'webpack';
 
 module.exports = {
     plugins: [
-        new webpack.IgnorePlugin(/vertx/)
+        new webpack.IgnorePlugin(/vertx/),
     ],
     entry: './src/server.js',
     output: {
