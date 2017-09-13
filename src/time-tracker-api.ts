@@ -37,7 +37,14 @@ export class TimeTrackerApi {
             }, error => {
                 response.error(error);
             });
-        })
+        });
+        this._router.post('/entries/getentriesbydaterange', (request, response) => {
+           this.getEntriesByDateRange(request.body.start, request.body.end).then( entries => {
+               response.json(entries);
+           }, error => {
+               response.error(error);
+           })
+        });
         this._router.get('/companies', (request, response) => {
             this.getCompanies().then(companies => {
                 response.json(companies);
@@ -261,6 +268,43 @@ export class TimeTrackerApi {
                     });
                 }
             });
+        });
+    }
+    getEntriesByDateRange(start: Date, end: Date): Promise<Array<any>> {
+        return new Promise( (resolve, reject) => {
+           this._mongodb.connect(this._DB_PATH, (connectionError, db) => {
+               const collection = db.collection('entries');
+               if (connectionError) {
+                   db.close();
+                   reject(connectionError);
+               } else {
+                   collection.find({
+                       $and: [
+                           {
+                               date: {
+                                   $gte: start
+                               }
+                           },
+                           {
+                               date: {
+                                   $lte: end
+                               }
+                           }
+                       ]
+                   }).toArray( (queryError, docs) => {
+                      if (queryError) {
+                          db.close();
+                          reject(queryError);
+                      }  else {
+                          db.close();
+                          resolve(docs);
+                      }
+                   }, error => {
+                       db.close();
+                       reject(error);
+                   });
+               }
+           })
         });
     }
     deleteEntry(entryId: string, companyId: string): Promise<any> {
