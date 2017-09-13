@@ -1,3 +1,4 @@
+
 export class TimeTrackerApi {
     private _express: any = null;
     private _router: any = null;
@@ -39,7 +40,11 @@ export class TimeTrackerApi {
             });
         });
         this._router.post('/entries/getentriesbydaterange', (request, response) => {
-           this.getEntriesByDateRange(request.body.start, request.body.end).then( entries => {
+            const start = new Date(request.body.start);
+            start.setHours(0, 0, 0, 0);
+            const end = new Date(request.body.end);
+            end.setHours(0, 0, 0, 0);
+           this.getEntriesByDateRange(start, end).then( entries => {
                response.json(entries);
            }, error => {
                response.error(error);
@@ -282,12 +287,12 @@ export class TimeTrackerApi {
                        $and: [
                            {
                                date: {
-                                   $gte: start
+                                   $gte: start.toISOString()
                                }
                            },
                            {
                                date: {
-                                   $lte: end
+                                   $lte: end.toISOString()
                                }
                            }
                        ]
