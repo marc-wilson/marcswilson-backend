@@ -50,8 +50,8 @@ export class TimeTrackerApi {
                response.error(error);
            })
         });
-        this._router.get('/companies', (request, response) => {
-            this.getCompanies().then(companies => {
+        this._router.get('/companies/:userId', (request, response) => {
+            this.getCompanies(request.params.userId).then(companies => {
                 response.json(companies);
             }, error => {
                 response.json(error);
@@ -92,9 +92,9 @@ export class TimeTrackerApi {
                     db.close();
                     reject(connectionError);
                 } else {
-                    collection.insert({ name: company.name }).then( response => {
+                    collection.insert({ name: company.name, userId: company.userId }).then( response => {
                         db.close();
-                        this.getCompanies().then( companies => {
+                        this.getCompanies(company.userId).then( companies => {
                             resolve(companies);
                         });
                     }, error => {
@@ -188,14 +188,14 @@ export class TimeTrackerApi {
             })
         });
     }
-    getCompanies(): Promise<Array<any>> {
+    getCompanies(userId): Promise<Array<any>> {
         return new Promise( (resolve, reject) => {
             this._mongodb.connect(this._DB_PATH, (connectionError, db) => {
                 const collection = db.collection('companies');
                 if (connectionError) {
                     reject(connectionError);
                 } else {
-                    collection.find().toArray( (queryError, docs) => {
+                    collection.find( { userId: userId }).toArray( (queryError, docs) => {
                         if (queryError) {
                             db.close();
                             reject(queryError);
