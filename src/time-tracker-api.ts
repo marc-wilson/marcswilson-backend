@@ -118,7 +118,8 @@ export class TimeTrackerApi {
                         project: entry.project,
                         companyId: company._id,
                         description: entry.description,
-                        timeSpent: entry.timeSpent
+                        timeSpent: entry.timeSpent,
+                        userId: entry.userId
                     }).then( response => {
                         db.close();
                         this.getEntriesByCompanyId(company._id).then( entries => {
@@ -206,32 +207,6 @@ export class TimeTrackerApi {
                     });
                 }
             });
-            // this._mongodb.connect(this._DB_PATH, (connectionError, db) => {
-            //     if (connectionError) {
-            //         reject(connectionError);
-            //         db.close();
-            //     } else {
-            //         const collection = db.collection('companies');
-            //         collection.aggregate([
-            //             {
-            //                 $lookup: {
-            //                     from: 'projects',
-            //                     localField: '_id',
-            //                     foreignField: 'companyId',
-            //                     as: 'projects'
-            //                 }
-            //             }
-            //         ]).toArray( (queryError, docs) => {
-            //             if (queryError) {
-            //                 reject(queryError);
-            //                 db.close();
-            //             } else {
-            //                 resolve(docs);
-            //                 db.close();
-            //             }
-            //         });
-            //     }
-            // })
         });
     }
     getProjectsByCompanyId(companyId): Promise<any> {
