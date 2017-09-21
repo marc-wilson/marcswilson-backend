@@ -44,7 +44,20 @@ export class TimeTrackerApi {
             start.setHours(0, 0, 0, 0);
             const end = new Date(request.body.end);
             end.setHours(0, 0, 0, 0);
-           this.getEntriesByDateRange(start, end).then( entries => {
+            const userId = request.body.userId;
+           this.getEntriesByDateRange(start, end, userId).then( entries => {
+               response.json(entries);
+           }, error => {
+               response.error(error);
+           })
+        });
+        this._router.post('/entries/getentriesbycompanyid', (request, response) => {
+           const start = new Date(request.body.start);
+           start.setHours(0, 0, 0, 0);
+           const end = new Date(request.body.end);
+           end.setHours(0, 0, 0, 0);
+           const companyId = request.body.companyId;
+           this.getEntriesByCompanyIdAndDateRange(start, end, companyId).then( entries => {
                response.json(entries);
            }, error => {
                response.error(error);
@@ -250,7 +263,7 @@ export class TimeTrackerApi {
             });
         });
     }
-    getEntriesByDateRange(start: Date, end: Date): Promise<Array<any>> {
+    getEntriesByDateRange(start: Date, end: Date, userId: string): Promise<Array<any>> {
         return new Promise( (resolve, reject) => {
            this._mongodb.connect(this._DB_PATH, (connectionError, db) => {
                const collection = db.collection('entries');
@@ -269,6 +282,9 @@ export class TimeTrackerApi {
                                date: {
                                    $lte: end.toISOString()
                                }
+                           },
+                           {
+                               userId: userId
                            }
                        ]
                    }).toArray( (queryError, docs) => {
@@ -285,6 +301,46 @@ export class TimeTrackerApi {
                    });
                }
            })
+        });
+    }
+    getEntriesByCompanyIdAndDateRange(start: Date, end: Date, companyId: string): Promise<Array<any>> {
+        return new Promise( (resolve, reject) => {
+            this._mongodb.connect(this._DB_PATH, (connectionError, db) => {
+                const collection = db.collection('entries');
+                if (connectionError) {
+                    db.close();
+                    reject(connectionError);
+                } else {
+                    collection.find({
+                        $and: [
+                            {
+                                date: {
+                                    $gte: start.toISOString()
+                                }
+                            },
+                            {
+                                date: {
+                                    $lte: end.toISOString()
+                                }
+                            },
+                            {
+                                companyId: companyId
+                            }
+                        ]
+                    }).toArray( (queryError, docs) => {
+                        if (queryError) {
+                            db.close();
+                            reject(queryError);
+                        } else {
+                            db.close();
+                            resolve(docs);
+                        }
+                    }, error => {
+                        db.close();
+                        reject(error);
+                    });
+                }
+            })
         });
     }
     deleteEntry(entryId: string, companyId: string): Promise<any> {
