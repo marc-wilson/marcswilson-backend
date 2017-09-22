@@ -94,7 +94,14 @@ export class TimeTrackerApi {
                 response.error(error);
             })
         });
-
+        this._router.post('/invoice/addinvoice', (request, response) => {
+            const invoice = request.body.invoice;
+            this.addInvoice(invoice).then( result => {
+                response.json(result);
+            }, error => {
+                response.error(error);
+            })
+        });
         module.exports = this._router;
     }
     addCompany(company): Promise<Array<any>> {
@@ -164,6 +171,18 @@ export class TimeTrackerApi {
                             reject(error);
                         });
                     });
+                }
+            });
+        });
+    }
+    addInvoice(invoice): Promise<any> {
+        return new Promise( (resolve, reject) => {
+            this._mongodb.connect(this._DB_PATH, (connectionError, db) => {
+                if (connectionError) {
+                    db.close();
+                    reject(connectionError);
+                } else {
+
                 }
             });
         });
