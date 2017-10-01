@@ -192,7 +192,7 @@ export class TimeTrackerApi {
                 } else {
                     const collection = db.collection('invoices');
                     collection.insert({
-                        companyName: invoice.company.name,
+                        company: invoice.company,
                         companyId: invoice.company._id,
                         userId: invoice.userId,
                         entries: invoice.entries,
