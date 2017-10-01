@@ -100,7 +100,15 @@ export class TimeTrackerApi {
                 response.json(result);
             }, error => {
                 response.error(error);
-            })
+            });
+        });
+        this._router.get('/invoice/invoices/:userId', (request, response) => {
+            const userId = request.params.userId;
+            this.getInvoices(userId).then( invoices => {
+                response.json(invoices);
+            }, error => {
+                response.error(error);
+            });
         });
         module.exports = this._router;
     }
@@ -182,10 +190,48 @@ export class TimeTrackerApi {
                     db.close();
                     reject(connectionError);
                 } else {
-
+                    const collection = db.collection('invoices');
+                    collection.insert({
+                        companyName: invoice.company.name,
+                        companyId: invoice.company._id,
+                        userId: invoice.userId,
+                        entries: invoice.entries,
+                        billRate: invoice.billRate,
+                        totalHours: invoice.totalHours,
+                        totalCompensation: invoice.totalCompensation,
+                        invoiceMonth: invoice.invoiceMonth,
+                        invoiceYear: invoice.invoiceYear,
+                        invoiceDate: invoice.invoiceDate,
+                        invoiceDueDate: invoice.invoiceDueDate
+                    }).then( response => {
+                        resolve(response);
+                    }, error => {
+                        reject(error);
+                    })
                 }
             });
         });
+    }
+    getInvoices(userId): Promise<any> {
+        return new Promise( (resolve, reject) => {
+            this._mongodb.connect(this._DB_PATH, (connectionError, db) => {
+                if (connectionError) {
+                    reject(connectionError);
+                    db.close();
+                } else {
+                    const collection = db.collection('invoices');
+                    collection.find({userId: userId}).toArray( (queryError, docs) => {
+                        if (queryError) {
+                            reject(queryError);
+                            db.close();
+                        } else {
+                            resolve(docs);
+                            db.close();
+                        }
+                    })
+                }
+            });
+        })
     }
     updateEntry(company, entry): Promise<any> {
         return new Promise( (resolve, reject) => {
