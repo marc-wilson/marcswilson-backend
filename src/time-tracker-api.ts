@@ -5,11 +5,13 @@ export class TimeTrackerApi {
     private _mongodb: any = null;
     private _DB_PATH = 'mongodb://localhost:27017/timetrackerdb';
     private _objectId: any = null;
+    private _xlsx: any = null;
 
     constructor() {
         this._express = require('express');
         this._mongodb = require('mongodb').MongoClient;
         this._objectId = require('mongodb').ObjectId;
+        this._xlsx = require('xlsx');
         this._router = this._express.Router();
         this._router.post('/addcompany', (request, response) => {
             this.addCompany(request.body.company).then( result => {
@@ -110,6 +112,14 @@ export class TimeTrackerApi {
                 response.error(error);
             });
         });
+        this._router.get('/invoice/export/:invoiceId', (request, response) => {
+            const invoiceId = request.params.invoiceId;
+            this.exportInvoice(invoiceId).then( _invoice => {
+                response.json(_invoice);
+            }, error => {
+                response.error(error);
+            })
+        })
         module.exports = this._router;
     }
     addCompany(company): Promise<Array<any>> {
@@ -231,6 +241,38 @@ export class TimeTrackerApi {
                     })
                 }
             });
+        })
+    }
+    getInvoiceById(invoiceId: string): Promise<any> {
+        return new Promise( (resolve, reject) => {
+            this._mongodb.connect(this._DB_PATH, (connectionError, db) => {
+                if (connectionError) {
+                    reject(connectionError);
+                    db.close();
+                } else {
+                    const collection = db.collection('invoices');
+                    collection.find({_id: this._objectId(invoiceId)}).toArray( (queryError, docs) => {
+                        if (queryError) {
+                            reject(queryError);
+                            db.close();
+                        } else {
+                            resolve(docs);
+                        }
+                    })
+                }
+            })
+        })
+    }
+    exportInvoice(invoiceId: string): Promise<any> {
+        return new Promise( (resolve, reject) => {
+            this.getInvoiceById(invoiceId).then( docs => {
+                if (docs) {
+                    const workbook = this._xlsx.readFile('<path to invoice>');
+                    if (workbook) {
+
+                    }
+                }
+            })
         })
     }
     updateEntry(company, entry): Promise<any> {

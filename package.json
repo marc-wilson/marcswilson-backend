@@ -15,7 +15,8 @@
     "express": "^4.15.4",
     "mongodb": "^2.2.31",
     "nodemailer": "^4.0.1",
-    "request": "^2.81.0"
+    "request": "^2.81.0",
+    "xlsx": "^0.11.5"
   },
   "devDependencies": {
     "@types/body-parser": "^1.16.5",
