@@ -1,3 +1,5 @@
+import * as FileReader from 'filereader';
+
 
 export class TimeTrackerApi {
     private _express: any = null;
@@ -267,10 +269,12 @@ export class TimeTrackerApi {
         return new Promise( (resolve, reject) => {
             this.getInvoiceById(invoiceId).then( docs => {
                 if (docs) {
-                    const workbook = this._xlsx.readFile('<path to invoice>');
+                    const workbook = this._xlsx.readFile('C:\\Users\\Marc\\Desktop\\UITSInvoiceTemplate.xlsx');
                     if (workbook) {
-
+                        const wbout = this._xlsx.write(workbook, { bookType:'xlsx', bookSST:false, type:'base64' });
+                        resolve(wbout);
                     }
+
                 }
             })
         })
