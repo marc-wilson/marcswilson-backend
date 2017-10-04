@@ -2,7 +2,6 @@ import * as MlbStatsApi from './mlb-stats-api';
 import * as PowerballAPI from './powerball-api';
 import * as AuthAPI from './auth-api';
 import * as EmailAPI from './email-api';
-import * as TimeTrackerAPI from './time-tracker-api';
 
 class Server {
     private _express: any = null;
@@ -27,7 +26,6 @@ class Server {
         this._app.use('/api/powerball', PowerballAPI);
         this._app.use('/api/auth', AuthAPI);
         this._app.use('/api/email', EmailAPI);
-        this._app.use('/api/timetracker', TimeTrackerAPI);
 
     }
 }
