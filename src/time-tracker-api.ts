@@ -1,19 +1,14 @@
-import * as FileReader from 'filereader';
-
-
 export class TimeTrackerApi {
     private _express: any = null;
     private _router: any = null;
     private _mongodb: any = null;
     private _DB_PATH = 'mongodb://localhost:27017/timetrackerdb';
     private _objectId: any = null;
-    private _xlsx: any = null;
 
     constructor() {
         this._express = require('express');
         this._mongodb = require('mongodb').MongoClient;
         this._objectId = require('mongodb').ObjectId;
-        this._xlsx = require('xlsx');
         this._router = this._express.Router();
         this._router.post('/addcompany', (request, response) => {
             this.addCompany(request.body.company).then( result => {
@@ -269,13 +264,10 @@ export class TimeTrackerApi {
         return new Promise( (resolve, reject) => {
             this.getInvoiceById(invoiceId).then( docs => {
                 if (docs) {
-                    const workbook = this._xlsx.readFile('C:\\Users\\Marc\\Desktop\\UITSInvoiceTemplate.xlsx');
-                    if (workbook) {
-                        const wbout = this._xlsx.write(workbook, { bookType:'xlsx', bookSST:false, type:'base64' });
-                        resolve(wbout);
-                    }
-
+                    resolve(docs);
                 }
+            }, error => {
+                reject(error);
             })
         })
     }
