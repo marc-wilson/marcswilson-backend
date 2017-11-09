@@ -10,6 +10,7 @@ class Server {
     private _path: any = null;
     private _server: any = null;
     private _cors: any = null;
+    public dotenv: any = require('dotenv').config({ path: './server.env'});
     constructor() {
         this._cors = require('cors');
         this._express = require('express');
