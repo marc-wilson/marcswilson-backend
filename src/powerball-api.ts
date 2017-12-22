@@ -4,6 +4,7 @@ export class PowerballApi {
     private _router: any = null;
 
     constructor() {
+
         this._express = require('express');
         this._request = require('request');
         this._router = this._express.Router();
