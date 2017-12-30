@@ -23,10 +23,10 @@ class Server {
         this._app.use(this._bodyParser.json());
         this._app.use(this._express.static(this._path.join(__dirname + './')));
         this._app.use(this._cors());
-        this._app.use('/api/mlbstats', MlbStatsApi);
-        this._app.use('/api/powerball', PowerballAPI);
-        this._app.use('/api/auth', AuthAPI);
-        this._app.use('/api/email', EmailAPI);
+        this._app.use('/mlbstats', MlbStatsApi);
+        this._app.use('/powerball', PowerballAPI);
+        this._app.use('/auth', AuthAPI);
+        this._app.use('/email', EmailAPI);
 
     }
 }
