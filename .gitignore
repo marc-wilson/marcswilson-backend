@@ -62,3 +62,4 @@ typings/
 *.js
 *.idea
 package-lock.json
+environment.ts

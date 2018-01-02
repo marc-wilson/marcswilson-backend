@@ -1,3 +1,5 @@
+import { environment } from '../environment';
+
 export class EmailApi {
     public express: any = null;
     public router: any = null;
@@ -26,7 +28,7 @@ export class EmailApi {
     sendEmail(subject: string, from: string, message: string): Promise<any> {
         return new Promise( (resolve, reject) => {
             this.aws.config = {
-                accessKeyId: process.env.AWS_ACCESS_ID,
+                accessKeyId: environment.AWS.AWS_ACCESS_ID,
                 secretAccessKey: process.env.AWS_ACCESS_KEY,
                 region: 'us-east-1'
             };

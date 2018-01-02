@@ -8,7 +8,7 @@ export class PowerballApi {
         this._express = require('express');
         this._request = require('request');
         this._router = this._express.Router();
-        this._router.get('/powerball', (request, response) => {
+        this._router.get('/numbers', (request, response) => {
             this._request('http://data.ny.gov/resource/d6yy-54nr.json', (error, res, body) => {
                 response.json(JSON.parse(body));
             });
