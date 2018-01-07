@@ -17,9 +17,9 @@ export class EmailApi {
             const from = body.from;
             const message = body.message;
             this.sendEmail(subject, from, message).then( result => {
-                response.json(result);
+                response.status(200).json(result);
             }, error => {
-                response.json(error);
+                response.status(500).json(error);
             });
         });
         module.exports = this.router;
@@ -29,7 +29,7 @@ export class EmailApi {
         return new Promise( (resolve, reject) => {
             this.aws.config = {
                 accessKeyId: environment.AWS.AWS_ACCESS_ID,
-                secretAccessKey: process.env.AWS_ACCESS_KEY,
+                secretAccessKey: environment.AWS.AWS_ACCESS_KEY,
                 region: 'us-east-1'
             };
             const transporter = this.nodemailer.createTransport({
