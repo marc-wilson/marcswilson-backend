@@ -41,7 +41,7 @@ export class EmailApi {
                 from: 'mwilson@marcswilson.com',
                 to: 'mwilson@marcswilson.com',
                 subject: subject,
-                text: `Message from ${from} \n ${message}`
+                html: message
             };
             transporter.sendMail(mailOptions, (error, info) => {
                 if (error) {
