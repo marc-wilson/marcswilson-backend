@@ -1,4 +1,4 @@
-import { environment } from '../environment';
+//import { environment } from '../environment';
 
 export class EmailApi {
     public express: any = null;
@@ -27,29 +27,30 @@ export class EmailApi {
     }
     sendEmail(subject: string, from: string, message: string): Promise<any> {
         return new Promise( (resolve, reject) => {
-            this.aws.config = {
-                accessKeyId: environment.AWS.AWS_ACCESS_ID,
-                secretAccessKey: environment.AWS.AWS_ACCESS_KEY,
-                region: 'us-east-1'
-            };
-            const transporter = this.nodemailer.createTransport({
-                SES: new this.aws.SES({
-                    apiVersion: '2012-10-17'
-                })
-            });
-            const mailOptions = {
-                from: 'mwilson@marcswilson.com',
-                to: 'mwilson@marcswilson.com',
-                subject: subject,
-                html: message
-            };
-            transporter.sendMail(mailOptions, (error, info) => {
-                if (error) {
-                    reject(error);
-                } else {
-                    resolve(info);
-                }
-            });
+            // this.aws.config = {
+            //     accessKeyId: environment.AWS.AWS_ACCESS_ID,
+            //     secretAccessKey: environment.AWS.AWS_ACCESS_KEY,
+            //     region: 'us-east-1'
+            // };
+            // const transporter = this.nodemailer.createTransport({
+            //     SES: new this.aws.SES({
+            //         apiVersion: '2012-10-17'
+            //     })
+            // });
+            // const mailOptions = {
+            //     from: 'mwilson@marcswilson.com',
+            //     to: 'mwilson@marcswilson.com',
+            //     subject: subject,
+            //     html: message
+            // };
+            // transporter.sendMail(mailOptions, (error, info) => {
+            //     if (error) {
+            //         reject(error);
+            //     } else {
+            //         resolve(info);
+            //     }
+            // });
+            resolve();
         });
     }
 }
