@@ -27,6 +27,7 @@ class Server {
         this._app.use('/powerball', PowerballAPI);
         this._app.use('/auth', AuthAPI);
         this._app.use('/email', EmailAPI);
+        console.log(`server listening on ${process.env.PORT}`);
 
     }
 }
