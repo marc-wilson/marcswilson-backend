@@ -2,6 +2,7 @@ import * as MlbStatsApi from './mlb-stats-api';
 import * as PowerballAPI from './powerball-api';
 import * as AuthAPI from './auth-api';
 import * as EmailAPI from './email-api';
+import * as AdminApi from './admin-api';
 
 class Server {
     private _express: any = null;
@@ -27,6 +28,7 @@ class Server {
         this._app.use('/powerball', PowerballAPI);
         this._app.use('/auth', AuthAPI);
         this._app.use('/email', EmailAPI);
+        this._app.use('/admin', AdminApi);
         console.log(`server listening on ${process.env.PORT}`);
 
     }
