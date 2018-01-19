@@ -1,5 +1,6 @@
 import { environment } from '../environment';
 import { Db, MongoClient } from 'mongodb';
+import { Database } from './models/admin/database';
 
 export class AdminApi {
     public express: any = null;
@@ -33,11 +34,12 @@ export class AdminApi {
            });
         });
     }
-    listDatabases(): Promise<any[]> {
+    listDatabases(): Promise<Database[]> {
         return new Promise( (resolve, reject) => {
            this.connect().then( _db => {
                _db.admin().listDatabases().then( _databases => {
-                   resolve(_databases.databases);
+                   const dbs = _databases.databases.map( d => new Database(d) );
+                   resolve(dbs);
                }, error => {
                    reject(error);
                });
