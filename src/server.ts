@@ -29,7 +29,7 @@ class Server {
         this._app.use('/auth', AuthAPI);
         this._app.use('/email', EmailAPI);
         this._app.use('/admin', AdminApi);
-        console.log(`server listening on ${process.env.PORT}`);
+        console.log(`server listening on ${process.env.PORT || 3000}`);
 
     }
 }
