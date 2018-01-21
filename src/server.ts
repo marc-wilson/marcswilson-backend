@@ -5,13 +5,14 @@ import * as EmailAPI from './email-api';
 import * as AdminApi from './admin-api';
 
 class Server {
+
     private _express: any = null;
     private _app: any = null;
     private _bodyParser: any = null;
     private _path: any = null;
     private _server: any = null;
     private _cors: any = null;
-    //public dotenv: any = require('dotenv').config({ path: './server.env'});
+
     constructor() {
         this._cors = require('cors');
         this._express = require('express');

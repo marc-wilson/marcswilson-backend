@@ -8,6 +8,10 @@ module.exports = {
             {
                 from: 'src/.htaccess',
                 to: ''
+            },
+            {
+                from: 'environment.js',
+                to: ''
             }
         ])
     ],
