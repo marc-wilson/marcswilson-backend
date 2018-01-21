@@ -22,6 +22,9 @@ export class AdminApi {
                 response.status(500).json(error);
             });
         });
+        this.router.get('/test', (request, response) => {
+           response.status(200).json({testing: 123}) ;
+        });
         this.router.get('/databases/:databaseName/collections', (request, response) => {
             this.listCollections(request.params.databaseName).then( _collections => {
                 response.status(200).json(_collections);
