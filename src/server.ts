@@ -46,6 +46,7 @@ class Server {
                 console.log('socket disconnected');
                 connections.pop();
                 console.log('connections: ' + connections.length);
+                socket.broadcast.emit('connectionCount', { connections: connections.length });
             });
         });
         console.log(`server listening on ${process.env.PORT || 3000}`);
