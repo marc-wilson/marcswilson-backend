@@ -37,7 +37,8 @@ class Server {
         this._io.on('connection', (socket) => {
             connections.push(socket);
             socket.broadcast.emit('connectionCount', { connections: connections.length });
-            if (true) { // Should wrap some kind of permission check around this before loading up the module
+            socket.emit('connectionCount', { connections: connections.length });
+            if (true) { // TODO: Should wrap some kind of permission check around this before loading up the module
                 const dbMod = new MlbStatsDb( socket );
             }
             socket.on('disconnect', () => {
