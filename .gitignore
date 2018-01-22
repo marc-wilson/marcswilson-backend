@@ -65,3 +65,4 @@ package-lock.json
 environment.ts
 .DS_Store
 /dist
+/baseballdatabank
