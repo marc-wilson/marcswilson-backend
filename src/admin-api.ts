@@ -2,7 +2,7 @@ import { environment } from '../environment';
 import { MongoClient } from 'mongodb';
 import { Database } from './models/admin/database';
 import { Collection } from './models/admin/collection';
-import { MlbStatsDb } from './modules/mlbstatsdb/mlb-stats-db';
+//import { MlbStatsDb } from './modules/mlbstatsdb/mlb-stats-db';
 
 export class AdminApi {
     public express: any = null;
@@ -90,8 +90,8 @@ export class AdminApi {
     }
     updateMlbStatsDb(): Promise<any> {
         return new Promise( (resolve, reject) => {
-            const mlbStatsDb = new MlbStatsDb();
-            resolve({test: mlbStatsDb.init()});
+            // const mlbStatsDb = new MlbStatsDb();
+            // resolve({test: mlbStatsDb.init()});
         });
     }
 }

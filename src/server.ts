@@ -3,7 +3,7 @@ import * as PowerballAPI from './powerball-api';
 import * as AuthAPI from './auth-api';
 import * as EmailAPI from './email-api';
 import * as AdminApi from './admin-api';
-//import * as webSocket from 'socket.io';
+import { MlbStatsDb } from './modules/mlbstatsdb/mlb-stats-db';
 
 class Server {
 
@@ -24,7 +24,6 @@ class Server {
         this._server = require('http').createServer(this._app);
         this._io = require('socket.io')(this._server, { serveClient: false });
         this._server.listen(process.env.PORT || 3000);
-        //this._server = this._app.listen(process.env.PORT || 3000);
         this._app.use(this._bodyParser.urlencoded({extended: true}));
         this._app.use(this._bodyParser.json());
         this._app.use(this._express.static(this._path.join(__dirname + './')));
@@ -34,21 +33,19 @@ class Server {
         this._app.use('/auth', AuthAPI);
         this._app.use('/email', EmailAPI);
         this._app.use('/admin', AdminApi);
-
-        //this._io = webSocket.listen(this._server);
         const connections = [];
         this._io.on('connection', (socket) => {
-            console.log('socket connected');
             connections.push(socket);
             socket.broadcast.emit('connectionCount', { connections: connections.length });
-            console.log('connections: ' + connections.length);
+            if (true) { // Should wrap some kind of permission check around this before loading up the module
+                const dbMod = new MlbStatsDb( socket );
+            }
             socket.on('disconnect', () => {
-                console.log('socket disconnected');
                 connections.pop();
-                console.log('connections: ' + connections.length);
                 socket.broadcast.emit('connectionCount', { connections: connections.length });
             });
         });
+
         console.log(`server listening on ${process.env.PORT || 3000}`);
 
     }

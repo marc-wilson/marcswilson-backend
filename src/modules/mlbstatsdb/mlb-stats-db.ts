@@ -1,7 +1,13 @@
 import * as fs from 'fs-extra';
 
 export class MlbStatsDb {
-    constructor(){}
+    public socket: any = null;
+    constructor(private _socket: any){
+        this.socket = _socket;
+        this.socket.on('testing', (data) => {
+            this.socket.emit('test', { test: data.test});
+        })
+    }
     init(): void {
 
     }
