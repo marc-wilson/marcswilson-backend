@@ -1,5 +1,7 @@
 import * as fs from 'fs-extra';
 import * as download from 'download-git-repo';
+import * as MongoClient from 'mongodb/lib/mongo_client';
+import { environment } from '../../../environment';
 
 export class MlbStatsDb {
     public socket: any = null;
@@ -17,6 +19,22 @@ export class MlbStatsDb {
             this.socket.emit('progress', { progress: `Step 2/12: Cloning baseball databank repo`})
             this.cloneRepository().then( _result => {
                 this.socket.emit('progress', { progress: `Step 2/12: Finished cloning baseball databank`})
+            }, error => {
+                this.socket.emit('progress', { progress: `Step 2/12: Failed - Error cloning baseball databank`})
+            });
+        }).then( () => {
+            this.socket.emit('progress', { progress: `Step 3/12: Droping mlbstatsdb`});
+            this.dropDatabase().then( _result => {
+                this.socket.emit('progress', { progress: `Step 3/12: mlbstatsdb has been dropped`});
+            }, error => {
+                this.socket.emit('progress', { progress: `Step 3/12: Failed - Error dropding mlbstatsdb`});
+            });
+        }).then( () => {
+            this.socket.emit('progress', { progress: `Step 4/12: Creating database`});
+            this.createDatabase().then( _result => {
+                this.socket.emit('progress', { progress: `${_result.join(', ')}`});
+            }, error => {
+                this.socket.emit('progress', { progress: `Step 4/12: Failed - Error creating database`});
             });
         })
     }
@@ -46,6 +64,47 @@ export class MlbStatsDb {
                     reject(null);
                 }
             });
+        });
+    }
+    dropDatabase(): Promise<any> {
+        return new Promise( (resolve, reject) => {
+            MongoClient.connect(`${environment.DATABASE.CONNECTION_STRING}/mlbstatsdb`, (err, _db) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    _db.dropDatabase().then( (dropErr, result) => {
+                        if (dropErr) {
+                            reject(dropErr);
+                        } else {
+                            resolve(true);
+                        }
+                    });
+                }
+            })
+        });
+    }
+    createDatabase(): Promise<any> {
+        return new Promise( (resolve, reject) => {
+            this.getCsvFiles().then( files => {
+                resolve(files);
+            }, error => {
+                reject(error);
+            });
+        });
+    }
+    getCsvFiles(): Promise<any> {
+        const files = [];
+        return new Promise( (resolve, reject) => {
+            fs.readdir('baseballdatabank/core', (err, files) => {
+                if (!err) {
+                    for (let i = 0; i < files.length; i++) {
+                        files.push(files[i]);
+                    }
+                    resolve(files);
+                } else {
+                    reject(err);
+                }
+            })
         });
     }
 }

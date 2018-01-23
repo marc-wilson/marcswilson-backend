@@ -43,17 +43,24 @@ export class AdminApi {
                 response.status(501).json(new Error('Not yet implemented'));
             }
         });
-
+        this.router.post('/databases/create/:databaseName', (request, response) => {
+            const name = request.params.databaseName;
+            this.createDatabase(name).then( _db => {
+                response.status(200).json(_db);
+            }, error => {
+                response.status(500).json(error);
+            });
+        });
         module.exports = this.router;
     }
     connect(databaseName?: string): Promise<any> {
         const connectionString = databaseName ? `${this.CONNECTION_STRING}/${databaseName}` : this.CONNECTION_STRING;
         return new Promise( (resolve, reject) => {
-           MongoClient.connect(connectionString, (err, _db) => {
+           MongoClient.connect(connectionString, (err, _client) => {
                if (err) {
                    reject(err);
                } else {
-                   resolve(_db);
+                   resolve(_client);
                }
            });
         });
@@ -92,6 +99,24 @@ export class AdminApi {
         return new Promise( (resolve, reject) => {
             // const mlbStatsDb = new MlbStatsDb();
             // resolve({test: mlbStatsDb.init()});
+        });
+    }
+    createDatabase(databaseName: string): Promise<any> {
+        return new Promise( (resolve, reject) => {
+           this.connect().then( _client => {
+               const db = _client.db(databaseName);
+               db.createCollection(`collection1`, (err, res) => {
+                   if (!err) {
+                       resolve(true);
+                   } else {
+                       reject(err);
+                   }
+               })
+               resolve(true);
+
+           }, error => {
+               reject(error);
+           });
         });
     }
 }
