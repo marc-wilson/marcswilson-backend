@@ -108,8 +108,10 @@ export class AdminApi {
                db.createCollection(`collection1`, (err, res) => {
                    if (!err) {
                        resolve(true);
+                       db.close();
                    } else {
                        reject(err);
+                       db.close();
                    }
                })
                resolve(true);
