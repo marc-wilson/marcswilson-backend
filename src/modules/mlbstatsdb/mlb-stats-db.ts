@@ -22,7 +22,7 @@ export class MlbStatsDb {
             this.socket.emit('progress', { progress: `Step 1/12: Finished removing BaseballDatabank local repo`})
         }
 
-        this.socket.emit('progress', { progress: `Step 2/12: Cloning baseball databank repo`})
+        this.socket.emit('progress', { progress: `Step 2/12: Cloning baseball databank repo`});
         const cloneRepoStep = await this.cloneRepository();
         errorOccurred = cloneRepoStep === true ? false : cloneRepoStep;
         if (errorOccurred) {
@@ -66,16 +66,23 @@ export class MlbStatsDb {
         });
     }
     async cloneRepository(): Promise<any> {
+        this.socket.emit('progress', { progress: 'Entering cloneRespoitory' });
         return new Promise( (resolve, reject) => {
             this.removeDatabankRepo().then( res => {
                 if (res) {
-                    download('chadwickbureau/baseballdatabank', 'baseballdatabank', (err) => {
-                        if (!err) {
-                            resolve(true);
-                        } else {
-                            reject(err);
-                        }
-                    })
+                    try {
+                        this.socket.emit('progress', { progress: 'here we go...' });
+                        download('chadwickbureau/baseballdatabank', 'baseballdatabank', (err) => {
+                            if (!err) {
+                                resolve(true);
+                            } else {
+                                this.socket.emit('progress', { progress: 'noooooooooooo' });
+                                reject(err);
+                            }
+                        });
+                    } catch (ex) {
+                        reject(ex);
+                    }
                 } else {
                     reject(null);
                 }
