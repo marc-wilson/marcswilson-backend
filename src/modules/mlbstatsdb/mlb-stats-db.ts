@@ -52,8 +52,11 @@ export class MlbStatsDb {
 
     }
     async removeDatabankRepo(): Promise<any> {
+        this.socket.emit('progress', { progress: 'removeDatabankRepo entered' });
         return new Promise( (resolve, reject) => {
+            this.socket.emit('progress', { progress: 'About to Remove baseballdatabank' });
             fs.remove('baseballdatabank', err => {
+                this.socket.emit('progress', { progress: 'fs remove finished' });
                 if (err) {
                     reject(err);
                 } else {
