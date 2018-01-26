@@ -2,6 +2,7 @@ import * as fs from 'fs-extra';
 import * as download from 'download-git-repo';
 import * as MongoClient from 'mongodb/lib/mongo_client';
 import { environment } from '../../../environment';
+import * as csv from 'csvtojson';
 
 export class MlbStatsDb {
     public socket: any = null;
@@ -45,7 +46,7 @@ export class MlbStatsDb {
         if (errorOccurred) {
             this.socket.emit('progress', { progress: `Step 4/12: Failed - Error creating database`});
         } else {
-            this.socket.emit('progress', { progress: `Finished`});
+            this.socket.emit('progress', { progress: null });
         }
 
 
@@ -104,10 +105,10 @@ export class MlbStatsDb {
                     const db = client.db( 'mlbstatsdb' );
                     this.getCsvFiles().then( files => {
 
-                        const promises = files.map( f => {
+                        const promises = files.map( async f => {
                             const name = this.getCollectionNameFromFile(f);
                             if (name) {
-                                return this.createCollection(name);
+                                return await this.createCollection(name, f);
                             }
                         });
                         Promise.all(promises).then( results => {
@@ -125,14 +126,38 @@ export class MlbStatsDb {
             });
         });
     }
-    async createCollection(collectionName: string): Promise<any> {
+    async createCollection(collectionName: string, fileName: string): Promise<any> {
         return new Promise( (resolve, reject) => {
             MongoClient.connect(`${environment.DATABASE.CONNECTION_STRING}`, (err, client) => {
                 if (!err) {
                     const db = client.db('mlbstatsdb');
+                    const data = [];
                     db.createCollection(collectionName, (colError, result) => {
                         if (!colError) {
-                            resolve(true);
+                            // TODO: CSV to JSON here...
+                            const csvPath = `baseballdatabank/core/${fileName}`;
+                            csv().fromFile(csvPath).on('json', (jsonObj) => {
+                               if (jsonObj) {
+                                   data.push(jsonObj);
+                               }
+                            }).on('done', error => {
+                                if (error) {
+                                    reject(error);
+                                } else {
+                                    const collection = db.collection(collectionName);
+                                    const batch = collection.initializeOrderedBulkOp();
+                                    for (let i = 0; i < data.length; i++) {
+                                        batch.insert(data[i]);
+                                    }
+                                    batch.execute( (bulkError, bulkResult) => {
+                                        if (bulkError) {
+                                            reject(bulkError);
+                                        } else {
+                                            resolve(bulkResult);
+                                        }
+                                    });
+                                }
+                            });
                         } else {
                             reject(colError);
                         }
