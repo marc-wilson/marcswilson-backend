@@ -152,8 +152,11 @@ export class MlbStatsDb {
                             csv().fromFile(csvPath).on('json', (jsonObj) => {
                                if (jsonObj) {
                                    data.push(jsonObj);
+                               } else {
+                                   reject(true);
                                }
                             }).on('done', error => {
+                                this.socket.emit('progress', { progress: `csv process complete for ${collectionName}. record count: ${data.length}`});
                                 if (error) {
                                     reject(error);
                                 } else {
