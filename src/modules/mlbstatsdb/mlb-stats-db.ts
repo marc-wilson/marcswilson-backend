@@ -127,6 +127,8 @@ export class MlbStatsDb {
                         Promise.all(promises).then( results => {
                             this.socket.emit('progress', { progress: `All promises completed: ${results.length}`});
                             resolve(true);
+                        }, error => {
+                            this.socket.emit('progress', { progress: `uuuuuh ${error.message}`});
                         }).catch( error => {
                             this.socket.emit('progress', { progress: `uuuuuh ${error.message}`});
                             reject(error);
