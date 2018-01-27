@@ -115,8 +115,8 @@ export class MlbStatsDb {
     async createDatabase(): Promise<any> {
         return new Promise( (resolve, reject) => {
             this.getCsvFiles().then( files => {
-                const testFiles = files.splice(0, 10);
-                const promises = testFiles.map( async f => {
+                //const testFiles = files.splice(0, 10);
+                const promises = files.map( async f => {
                     const name = this.getCollectionNameFromFile(f);
                     if (name) {
                         return this.createCollection( name, f );
