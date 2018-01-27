@@ -23,12 +23,18 @@ export class MlbStatsDb {
         }
 
         this.socket.emit('progress', { progress: `Step 2/12: Cloning baseball databank repo`});
-        const cloneRepoStep = await this.cloneRepository();
-        errorOccurred = cloneRepoStep === true ? false : cloneRepoStep;
-        if (errorOccurred) {
-            this.socket.emit('progress', { progress: `Step 2/12: Failed - Error cloning baseball databank`})
-        } else {
-            this.socket.emit('progress', { progress: `Step 2/12: Finished cloning baseball databank`})
+        try {
+            this.socket.emit('progress', { progress: `Step 2/12: About to clone repo`});
+            const cloneRepoStep = await this.cloneRepository();
+            this.socket.emit('progress', { progress: `Step 2/12: done cloning baseball databank repo`});
+            errorOccurred = cloneRepoStep === true ? false : cloneRepoStep;
+            if ( errorOccurred ) {
+                this.socket.emit( 'progress', { progress: `Step 2/12: Failed - Error cloning baseball databank` } )
+            } else {
+                this.socket.emit( 'progress', { progress: `Step 2/12: Finished cloning baseball databank` } )
+            }
+        } catch(ex) {
+            this.socket.emit( 'progress', { progress: ex.message });
         }
 
         this.socket.emit('progress', { progress: `Step 3/12: Droping mlbstatsdb`});
