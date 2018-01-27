@@ -114,38 +114,27 @@ export class MlbStatsDb {
     }
     async createDatabase(): Promise<any> {
         return new Promise( (resolve, reject) => {
-            MongoClient.connect(`${environment.DATABASE.CONNECTION_STRING}`, (err, client) => {
-                if (!err) {
-                    const db = client.db( 'mlbstatsdb' );
-                    this.getCsvFiles().then( files => {
-                        const promises = files.map( async f => {
-                            const name = this.getCollectionNameFromFile(f);
-                            if (name) {
-                                if (name !== 'pitchings') {
-                                    return await this.createCollection( name, f );
-                                }
-                            }
-                        });
-                        Promise.all(promises).then( results => {
-                            this.socket.emit('progress', { progress: `All promises completed: ${results.length}`});
-                            resolve(true);
-                            db.close();
-                        }, error => {
-                            this.socket.emit('progress', { progress: `uuuuuh1 ${error.message}`});
-                            db.close();
-                        }).catch( error => {
-                            this.socket.emit('progress', { progress: `uuuuuh2 ${error.message}`});
-                            db.close();
-                            reject(error);
-                        });
+            this.getCsvFiles().then( files => {
+                const promises = files.map( async f => {
+                    const name = this.getCollectionNameFromFile(f);
+                    if (name) {
+                        return await this.createCollection( name, f );
+                    }
+                });
+                Promise.all(promises).then( results => {
+                    this.socket.emit('progress', { progress: `All promises completed: ${results.length}`});
+                    resolve(true);
+                }, error => {
+                    this.socket.emit('progress', { progress: `uuuuuh1 ${error.message}`});
+                }).catch( error => {
+                    this.socket.emit('progress', { progress: `uuuuuh2 ${error.message}`});
+                    reject(error);
+                });
 
-                    }, error => {
-                        reject( error );
-                    } );
-                } else {
-                    reject(err);
-                }
+            }, error => {
+                reject( error );
             });
+
         });
     }
     async createCollection(collectionName: string, fileName: string): Promise<any> {
