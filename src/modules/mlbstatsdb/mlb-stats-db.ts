@@ -24,7 +24,7 @@ export class MlbStatsDb {
 
         this.socket.emit('progress', { progress: `Step 2/12: Cloning baseball databank repo`});
         try {
-            this.socket.emit('progress', { progress: `Step 2/12: About to clone repo`});
+            this.socket.emit('progress', { progress: `Step 2/12: About to clone repo...`});
             const cloneRepoStep = await this.cloneRepository();
             this.socket.emit('progress', { progress: `Step 2/12: done cloning baseball databank repo`});
             errorOccurred = cloneRepoStep === true ? false : cloneRepoStep;
