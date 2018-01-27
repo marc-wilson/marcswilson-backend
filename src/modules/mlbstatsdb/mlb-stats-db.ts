@@ -205,7 +205,9 @@ export class MlbStatsDb {
             fs.readdir('baseballdatabank/core', (err, _files) => {
                 if (!err) {
                     for (let i = 0; i < _files.length; i++) {
-                        files.push(_files[i]);
+                        if (_files[i].endsWith('.csv')) {
+                            files.push( _files[ i ] );
+                        }
                     }
                     resolve(files);
                 } else {
