@@ -116,9 +116,7 @@ export class MlbStatsDb {
             MongoClient.connect(`${environment.DATABASE.CONNECTION_STRING}`, (err, client) => {
                 if (!err) {
                     const db = client.db( 'mlbstatsdb' );
-                    this.socket.emit('progress', { progress: `Connected to db`});
                     this.getCsvFiles().then( files => {
-                        this.socket.emit('progress', { progress: `Got ${files.length} files`});
                         const promises = files.map( async f => {
                             const name = this.getCollectionNameFromFile(f);
                             if (name) {
@@ -146,6 +144,7 @@ export class MlbStatsDb {
                 if (!err) {
                     const db = client.db('mlbstatsdb');
                     const data = [];
+                    this.socket.emit('progress', { progress: `creating ${collectionName} collection`});
                     db.createCollection(collectionName, (colError, result) => {
                         if (!colError) {
                             // TODO: CSV to JSON here...
