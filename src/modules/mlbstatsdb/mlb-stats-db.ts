@@ -129,10 +129,10 @@ export class MlbStatsDb {
                             resolve(true);
                             db.close();
                         }, error => {
-                            this.socket.emit('progress', { progress: `uuuuuh ${error.message}`});
+                            this.socket.emit('progress', { progress: `uuuuuh1 ${error.message}`});
                             db.close();
                         }).catch( error => {
-                            this.socket.emit('progress', { progress: `uuuuuh ${error.message}`});
+                            this.socket.emit('progress', { progress: `uuuuuh2 ${error.message}`});
                             db.close();
                             reject(error);
                         });
