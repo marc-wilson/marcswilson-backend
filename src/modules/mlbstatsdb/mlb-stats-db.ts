@@ -48,6 +48,7 @@ export class MlbStatsDb {
 
         this.socket.emit('progress', { progress: `Step 4/12: Creating database`});
         const createDBStep = await this.createDatabase();
+        this.socket.emit('progress', { progress: `after createdbstep ${createDBStep}`});
         errorOccurred = createDBStep === true ? false : createDBStep;
         if (errorOccurred) {
             this.socket.emit('progress', { progress: `Step 4/12: Failed - Error creating database`});
@@ -124,8 +125,10 @@ export class MlbStatsDb {
                             }
                         });
                         Promise.all(promises).then( results => {
+                            this.socket.emit('progress', { progress: `All promises completed: ${results.length}`});
                             resolve(true);
                         }).catch( error => {
+                            this.socket.emit('progress', { progress: `uuuuuh ${error.message}`});
                             reject(error);
                         });
 
