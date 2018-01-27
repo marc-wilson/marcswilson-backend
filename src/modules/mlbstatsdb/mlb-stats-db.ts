@@ -127,10 +127,13 @@ export class MlbStatsDb {
                         Promise.all(promises).then( results => {
                             this.socket.emit('progress', { progress: `All promises completed: ${results.length}`});
                             resolve(true);
+                            db.close();
                         }, error => {
                             this.socket.emit('progress', { progress: `uuuuuh ${error.message}`});
+                            db.close();
                         }).catch( error => {
                             this.socket.emit('progress', { progress: `uuuuuh ${error.message}`});
+                            db.close();
                             reject(error);
                         });
 
@@ -165,6 +168,7 @@ export class MlbStatsDb {
                                 if (error) {
                                     this.socket.emit('progress', { progress: `Something bad happened!!!!!`});
                                     reject(error);
+                                    db.close();
                                 } else {
                                     const collection = db.collection(collectionName);
                                     const batch = collection.initializeOrderedBulkOp();
@@ -175,6 +179,7 @@ export class MlbStatsDb {
                                     batch.execute( (bulkError, bulkResult) => {
                                         if (bulkError) {
                                             this.socket.emit('progress', { progress: `Bulk Error!`});
+                                            db.close();
                                             reject(bulkError);
                                         } else {
                                             this.socket.emit('progress', { progress: `Bulk process done for ${collectionName}`});
@@ -186,6 +191,7 @@ export class MlbStatsDb {
                             });
                         } else {
                             reject(colError);
+                            db.close();
                         }
                     });
                 } else {
