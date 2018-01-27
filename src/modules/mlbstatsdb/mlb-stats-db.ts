@@ -24,7 +24,7 @@ export class MlbStatsDb {
 
         this.socket.emit('progress', { progress: `Step 2/12: Cloning baseball databank repo`});
         try {
-            this.socket.emit('progress', { progress: `Step 2/12: About to clone repo...`});
+            this.socket.emit('progress', { progress: `Step 2/12: About to clone repo`});
             const cloneRepoStep = await this.cloneRepository();
             this.socket.emit('progress', { progress: `Step 2/12: done cloning baseball databank repo`});
             errorOccurred = cloneRepoStep === true ? false : cloneRepoStep;
@@ -37,7 +37,7 @@ export class MlbStatsDb {
             this.socket.emit( 'progress', { progress: ex.message });
         }
 
-        this.socket.emit('progress', { progress: `Step 3/12: Droping mlbstatsdb`});
+        this.socket.emit('progress', { progress: `Step 3/12: Dropping mlbstatsdb`});
         const dropDBStep = await this.dropDatabase();
         errorOccurred = dropDBStep === true ? false : dropDBStep;
         if (errorOccurred) {
@@ -72,17 +72,14 @@ export class MlbStatsDb {
         });
     }
     async cloneRepository(): Promise<any> {
-        this.socket.emit('progress', { progress: 'Entering cloneRespoitory' });
         return new Promise( (resolve, reject) => {
             this.removeDatabankRepo().then( res => {
                 if (res) {
                     try {
-                        this.socket.emit('progress', { progress: 'here we go...' });
                         download('chadwickbureau/baseballdatabank', 'baseballdatabank', (err) => {
                             if (!err) {
                                 resolve(true);
                             } else {
-                                this.socket.emit('progress', { progress: 'noooooooooooo' });
                                 reject(err);
                             }
                         });
@@ -119,8 +116,9 @@ export class MlbStatsDb {
             MongoClient.connect(`${environment.DATABASE.CONNECTION_STRING}`, (err, client) => {
                 if (!err) {
                     const db = client.db( 'mlbstatsdb' );
+                    this.socket.emit('progress', { progress: `Connected to db`});
                     this.getCsvFiles().then( files => {
-
+                        this.socket.emit('progress', { progress: `Got ${files.length} files`});
                         const promises = files.map( async f => {
                             const name = this.getCollectionNameFromFile(f);
                             if (name) {
