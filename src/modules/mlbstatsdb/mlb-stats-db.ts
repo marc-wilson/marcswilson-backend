@@ -158,6 +158,7 @@ export class MlbStatsDb {
                             }).on('done', error => {
                                 this.socket.emit('progress', { progress: `csv process complete for ${collectionName}. record count: ${data.length}`});
                                 if (error) {
+                                    this.socket.emit('progress', { progress: `Something bad happened!!!!!`});
                                     reject(error);
                                 } else {
                                     const collection = db.collection(collectionName);
@@ -167,8 +168,10 @@ export class MlbStatsDb {
                                     }
                                     batch.execute( (bulkError, bulkResult) => {
                                         if (bulkError) {
+                                            this.socket.emit('progress', { progress: `Bulk Error!`});
                                             reject(bulkError);
                                         } else {
+                                            this.socket.emit('progress', { progress: `Bulk process done for ${collectionName}`});
                                             resolve(bulkResult);
                                         }
                                     });
