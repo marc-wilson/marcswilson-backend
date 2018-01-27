@@ -178,6 +178,7 @@ export class MlbStatsDb {
                                             reject(bulkError);
                                         } else {
                                             this.socket.emit('progress', { progress: `Bulk process done for ${collectionName}`});
+                                            db.close();
                                             resolve(bulkResult);
                                         }
                                     });
