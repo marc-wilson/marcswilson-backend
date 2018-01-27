@@ -121,7 +121,9 @@ export class MlbStatsDb {
                         const promises = files.map( async f => {
                             const name = this.getCollectionNameFromFile(f);
                             if (name) {
-                                return await this.createCollection(name, f);
+                                if (name !== 'pitchings') {
+                                    return await this.createCollection( name, f );
+                                }
                             }
                         });
                         Promise.all(promises).then( results => {
