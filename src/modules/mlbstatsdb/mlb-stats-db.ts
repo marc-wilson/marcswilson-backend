@@ -148,9 +148,8 @@ export class MlbStatsDb {
     }
     async createCollection(collectionName: string, fileName: string): Promise<any> {
         return new Promise( (resolve, reject) => {
-            MongoClient.connect(`${environment.DATABASE.CONNECTION_STRING}`, (err, client) => {
+            MongoClient.connect(`${environment.DATABASE.CONNECTION_STRING}/mlbstatsdb`, (err, db) => {
                 if (!err) {
-                    const db = client.db('mlbstatsdb');
                     const data = [];
                     this.socket.emit('progress', { progress: `creating ${collectionName} collection`});
                     db.createCollection(collectionName, (colError, result) => {
