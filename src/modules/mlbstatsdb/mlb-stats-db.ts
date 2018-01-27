@@ -169,6 +169,7 @@ export class MlbStatsDb {
                                     for (let i = 0; i < data.length; i++) {
                                         batch.insert(data[i]);
                                     }
+                                    this.socket.emit('progress', { progress: `batch command about to execute ${collectionName}`});
                                     batch.execute( (bulkError, bulkResult) => {
                                         if (bulkError) {
                                             this.socket.emit('progress', { progress: `Bulk Error!`});
