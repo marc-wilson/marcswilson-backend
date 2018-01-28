@@ -55,8 +55,6 @@ export class MlbStatsDb {
         } else {
             this.socket.emit('progress', { progress: null });
         }
-
-
     }
     async removeDatabankRepo(): Promise<any> {
         this.socket.emit('progress', { progress: 'removeDatabankRepo entered' });

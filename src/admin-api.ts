@@ -2,7 +2,6 @@ import { environment } from '../environment';
 import { MongoClient } from 'mongodb';
 import { Database } from './models/admin/database';
 import { Collection } from './models/admin/collection';
-//import { MlbStatsDb } from './modules/mlbstatsdb/mlb-stats-db';
 
 export class AdminApi {
     public express: any = null;
@@ -22,9 +21,6 @@ export class AdminApi {
                 response.status(500).json(error);
             });
         });
-        this.router.get('/test', (request, response) => {
-           response.status(200).json({testing: 123}) ;
-        });
         this.router.get('/databases/:databaseName/collections', (request, response) => {
             this.listCollections(request.params.databaseName).then( _collections => {
                 response.status(200).json(_collections);
@@ -32,16 +28,12 @@ export class AdminApi {
                 response.status(500).json(error);
             })
         });
-        this.router.post('/databases/:databaseName/update', (request, response) => {
-            if (request.params.databaseName === 'mlbstatsdb') {
-                this.updateMlbStatsDb().then( _result => {
-                    response.status(200).json(_result);
-                }, error => {
-                    response.status(500).json(error);
-                });
-            } else {
-                response.status(501).json(new Error('Not yet implemented'));
-            }
+        this.router.get('/databases/:databaseName/:collectionName', (request, response) => {
+            this.getCollectionData(request.params.databaseName, request.params.collectionName).then( data => {
+                response.status(200).json(data);
+            }, error => {
+                response.status(500).json(error);
+            });
         });
         this.router.post('/databases/create/:databaseName', (request, response) => {
             const name = request.params.databaseName;
@@ -95,10 +87,23 @@ export class AdminApi {
             });
         });
     }
-    updateMlbStatsDb(): Promise<any> {
+    getCollectionData(databaseName: string, collectionName: string): Promise<any[]> {
         return new Promise( (resolve, reject) => {
-            // const mlbStatsDb = new MlbStatsDb();
-            // resolve({test: mlbStatsDb.init()});
+           MongoClient.connect(`${this.CONNECTION_STRING}`, (err, _client) => {
+               if (!err) {
+                   const db = _client.db(databaseName);
+                   const collection = db.collection(collectionName);
+                   collection.find().limit(20).toArray( (_err, docs) => {
+                       if (!_err) {
+                           resolve(docs);
+                       } else {
+                           reject(_err);
+                       }
+                   });
+               } else {
+                   reject(err);
+               }
+           });
         });
     }
     createDatabase(databaseName: string): Promise<any> {
