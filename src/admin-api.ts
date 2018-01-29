@@ -2,6 +2,7 @@ import { environment } from '../environment';
 import { MongoClient } from 'mongodb';
 import { Database } from './models/admin/database';
 import { Collection } from './models/admin/collection';
+import { User } from './modules/User';
 
 export class AdminApi {
     public express: any = null;
@@ -43,6 +44,21 @@ export class AdminApi {
                 response.status(500).json(error);
             });
         });
+
+        this.router.post('/users/create', (request, response) => {
+            const user = new User();
+            user.name = request.body.name;
+            user.email = request.body.email;
+            user.role = request.body.role;
+            user.created = request.body.created;
+
+           this.createUser(user).then( _user => {
+               response.status(200).json(_user);
+           }, error => {
+               response.status(500).json(error);
+           })
+        });
+
         module.exports = this.router;
     }
     connect(databaseName?: string): Promise<any> {
@@ -93,7 +109,7 @@ export class AdminApi {
                if (!err) {
                    const db = _client.db(databaseName);
                    const collection = db.collection(collectionName);
-                   collection.find().limit(20).toArray( (_err, docs) => {
+                   collection.find().limit(100).toArray( (_err, docs) => {
                        if (!_err) {
                            resolve(docs);
                        } else {
@@ -121,6 +137,20 @@ export class AdminApi {
            }, error => {
                reject(error);
            });
+        });
+    }
+    createUser(user: User): Promise<any> {
+        return new Promise( (resolve, reject) => {
+            MongoClient.connect(`${this.CONNECTION_STRING}`, (connectionErr, _client) => {
+                if (connectionErr) {
+                    reject(connectionErr);
+                } else {
+                    const collection = _client.db('admin').collection('users');
+                    collection.insertOne(user, (_err, _result) => {
+                        resolve(_result);
+                    })
+                }
+            })
         });
     }
 }
