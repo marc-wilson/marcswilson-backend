@@ -2,7 +2,7 @@ import { environment } from '../environment';
 import { MongoClient } from 'mongodb';
 import { Database } from './models/admin/database';
 import { Collection } from './models/admin/collection';
-import { User } from './modules/User';
+import { User } from './models/admin/user';
 
 export class AdminApi {
     public express: any = null;
@@ -52,11 +52,18 @@ export class AdminApi {
             user.role = request.body.role;
             user.created = request.body.created;
 
-           this.createUser(user).then( _user => {
-               response.status(200).json(_user);
+           this.createUser(user).then( _users => {
+               response.status(200).json(_users);
            }, error => {
                response.status(500).json(error);
            })
+        });
+        this.router.get('/users', (request, response) => {
+            this.getUsers().then( _users => {
+                response.status(200).json(_users);
+            }, error => {
+                response.status(500).json(error);
+            });
         });
 
         module.exports = this.router;
@@ -139,19 +146,52 @@ export class AdminApi {
            });
         });
     }
-    createUser(user: User): Promise<any> {
+    createUser(user: User): Promise<User[]> {
         return new Promise( (resolve, reject) => {
             MongoClient.connect(`${this.CONNECTION_STRING}`, (connectionErr, _client) => {
                 if (connectionErr) {
+                    _client.close();
                     reject(connectionErr);
                 } else {
                     const collection = _client.db('admin').collection('users');
                     collection.insertOne(user, (_err, _result) => {
-                        resolve(_result);
-                    })
+                        if (!_err) {
+                            _client.close();
+                            this.getUsers().then( _users => {
+                                resolve( _users );
+                            }, error => {
+                                reject( error );
+                            } );
+                        } else {
+                            reject(_err);
+                            _client.close();
+                        }
+                    });
                 }
             })
         });
+    }
+    getUsers(): Promise<User[]> {
+        return new Promise( (resolve, reject) => {
+            MongoClient.connect(this.CONNECTION_STRING, (connectionError, _client) => {
+                if (connectionError) {
+                    reject(connectionError);
+                    _client.close();
+                } else {
+                    const collection = _client.db('admin').collection('users');
+                    collection.find().toArray( (err, docs) => {
+                        if (err) {
+                            reject(err);
+                            _client.close();
+                        } else {
+                            const users = docs.map( u => new User(u) );
+                            resolve(users);
+                            _client.close();
+                        }
+                    });
+                }
+            })
+        })
     }
 }
 
