@@ -3,6 +3,7 @@ import { MongoClient } from 'mongodb';
 import { Database } from './models/admin/database';
 import { Collection } from './models/admin/collection';
 import { User } from './models/admin/user';
+import * as CryptoJS from 'crypto-js';
 
 export class AdminApi {
     public express: any = null;
@@ -46,12 +47,7 @@ export class AdminApi {
         });
 
         this.router.post('/users/create', (request, response) => {
-            const user = new User();
-            user.name = request.body.name;
-            user.email = request.body.email;
-            user.role = request.body.role;
-            user.created = request.body.created;
-
+            const user = new User(request.body);
            this.createUser(user).then( _users => {
                response.status(200).json(_users);
            }, error => {
@@ -147,6 +143,8 @@ export class AdminApi {
         });
     }
     createUser(user: User): Promise<User[]> {
+        const cipherText = CryptoJS.AES.encrypt(user.passwordHash, environment.SECURITY.SERVER_KEY);
+        user.passwordHash = cipherText.toString();
         return new Promise( (resolve, reject) => {
             MongoClient.connect(`${this.CONNECTION_STRING}`, (connectionErr, _client) => {
                 if (connectionErr) {

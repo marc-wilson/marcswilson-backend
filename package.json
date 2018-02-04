@@ -12,6 +12,7 @@
     "aws-sdk": "^2.102.0",
     "body-parser": "^1.17.2",
     "cors": "^2.8.4",
+    "crypto-js": "^3.1.9-1",
     "csvtojson": "^1.1.9",
     "dotenv": "^4.0.0",
     "download-git-repo": "^1.0.2",
