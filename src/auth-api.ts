@@ -37,24 +37,35 @@ export class AuthApi {
                        if (_err) {
                            reject(_err);
                        } else {
-                           const record = new User(_docs[0]);
-                           if (record) {
-                               const auth = this.doesHashMatch(record.passwordHash);
-                               console.log(auth);
+                           const user = new User(_docs[0]);
+                           if (user) {
+                               const auth = this.doesHashMatch(hash, user.passwordHash.toString());
+                               if (auth === true) {
+                                   resolve(user)
+                               } else {
+                                   reject(new Error('Invalid Credentials'));
+                               }
                            } else {
                                reject(new Error ('Something strange happened that I have not accounted for'));
                                // TODO: Insert exception notifier here (airbrake, insights, email, slack, etc...)
                            }
-                           resolve(_docs);
                        }
-                    });
+                    })
                 }
             });
         });
     }
-    doesHashMatch(hash: string): boolean {
-        const dec = CryptoJS.AES.decrypt(hash, environment.SECURITY.SERVER_KEY);
-        return true;
+    doesHashMatch(clientHash: string, serverHash: string): boolean {
+        const cpBytes = CryptoJS.AES.decrypt(clientHash, environment.SECURITY.CLIENT_KEY);
+        const cPass = cpBytes.toString(CryptoJS.enc.Utf8);
+        const spBytes = CryptoJS.AES.decrypt(serverHash, environment.SECURITY.SERVER_KEY);
+        const sPassEncrypted = spBytes.toString(CryptoJS.enc.Utf8);
+        const sPassEncryptedBytes = CryptoJS.AES.decrypt(sPassEncrypted, environment.SECURITY.CLIENT_KEY);
+        const sPass = sPassEncryptedBytes.toString(CryptoJS.enc.Utf8);
+        if (cPass === sPass) {
+            return true;
+        }
+        return false;
     }
 }
 new AuthApi();

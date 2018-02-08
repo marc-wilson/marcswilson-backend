@@ -142,7 +142,7 @@ export class AdminApi {
            });
         });
     }
-    createUser(user: User): Promise<User[]> {
+    createUser(user: User): Promise<User> {
         const cipherText = CryptoJS.AES.encrypt(user.passwordHash, environment.SECURITY.SERVER_KEY);
         user.passwordHash = cipherText.toString();
         return new Promise( (resolve, reject) => {
@@ -155,11 +155,11 @@ export class AdminApi {
                     collection.insertOne(user, (_err, _result) => {
                         if (!_err) {
                             _client.close();
-                            this.getUsers().then( _users => {
-                                resolve( _users );
+                            this.getUser(user.email).then( _user => {
+                                resolve(_user);
                             }, error => {
-                                reject( error );
-                            } );
+                                reject(error);
+                            })
                         } else {
                             reject(_err);
                             _client.close();
@@ -168,6 +168,30 @@ export class AdminApi {
                 }
             })
         });
+    }
+    getUser(email: string): Promise<User> {
+        return new Promise( (resolve, reject) => {
+            MongoClient.connect(`${this.CONNECTION_STRING}`, (connectionError, _client) => {
+                if (connectionError) {
+                    reject(connectionError);
+                    _client.close();
+                } else {
+                    const collection = _client.db('admin').collection('users');
+                    collection.find({ email: email }).toArray( (err, docs) => {
+                        if (err) {
+                            reject(err);
+                        } else {
+                            const user = docs[0];
+                            if (user) {
+                                resolve(new User(user));
+                            } else {
+                                reject(new Error('Something that I have not planned for has happened'));
+                            }
+                        }
+                    });
+                }
+            })
+        })
     }
     getUsers(): Promise<User[]> {
         return new Promise( (resolve, reject) => {
