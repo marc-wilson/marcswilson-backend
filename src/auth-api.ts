@@ -19,7 +19,7 @@ export class AuthApi {
             this.login(request.body.username, request.body.hash).then( _result => {
                 response.status(200).json(_result);
             }, error => {
-                response.status(500).json(error);
+                response.status(500).json(new Error('Invalid username or password.'));
             })
         })
 
