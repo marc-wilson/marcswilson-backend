@@ -37,17 +37,21 @@ export class AuthApi {
                        if (_err) {
                            reject(_err);
                        } else {
-                           const user = new User(_docs[0]);
-                           if (user) {
-                               const auth = this.doesHashMatch(hash, user.passwordHash.toString());
-                               if (auth === true) {
-                                   resolve(user)
+                           if (_docs.lenth > 0) {
+                               const user = new User( _docs[ 0 ] );
+                               if ( user ) {
+                                   const auth = this.doesHashMatch( hash, user.passwordHash.toString() );
+                                   if ( auth === true ) {
+                                       resolve( user )
+                                   } else {
+                                       reject( new Error( 'Invalid Credentials' ) );
+                                   }
                                } else {
-                                   reject(new Error('Invalid Credentials'));
+                                   reject( new Error( 'Something strange happened that I have not accounted for' ) );
+                                   // TODO: Insert exception notifier here (airbrake, insights, email, slack, etc...)
                                }
                            } else {
-                               reject(new Error ('Something strange happened that I have not accounted for'));
-                               // TODO: Insert exception notifier here (airbrake, insights, email, slack, etc...)
+                               new Error('Invalid Credentials');
                            }
                        }
                     })
