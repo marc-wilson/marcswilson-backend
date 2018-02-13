@@ -37,7 +37,7 @@ export class AuthApi {
                        if (_err) {
                            reject(_err);
                        } else {
-                           if (_docs.lenth > 0) {
+                           if (_docs.length > 0) {
                                const user = new User( _docs[ 0 ] );
                                if ( user ) {
                                    const auth = this.doesHashMatch( hash, user.passwordHash.toString() );
