@@ -1,5 +1,5 @@
 import { environment } from '../environment';
-import { MongoClient } from 'mongodb';
+import { MongoClient, ObjectID } from 'mongodb';
 import { Database } from './models/admin/database';
 import { Collection } from './models/admin/collection';
 import { User } from './models/admin/user';
@@ -50,6 +50,14 @@ export class AdminApi {
             const user = new User(request.body);
            this.createUser(user).then( _users => {
                response.status(200).json(_users);
+           }, error => {
+               response.status(500).json(error);
+           })
+        });
+        this.router.delete('/users/delete/:userId', (request, response) => {
+           const userId = request.params.userId;
+           this.deleteUser(userId).then( _result => {
+               response.status(200).json(_result);
            }, error => {
                response.status(500).json(error);
            })
@@ -152,6 +160,7 @@ export class AdminApi {
                     reject(connectionErr);
                 } else {
                     const collection = _client.db('admin').collection('users');
+                    delete user._id;
                     collection.insertOne(user, (_err, _result) => {
                         if (!_err) {
                             _client.close();
@@ -165,6 +174,27 @@ export class AdminApi {
                             _client.close();
                         }
                     });
+                }
+            })
+        });
+    }
+    deleteUser(userId): Promise<any> {
+        return new Promise( (resolve, reject) => {
+            MongoClient.connect(`${this.CONNECTION_STRING}`, (connectionErr, _client) => {
+                if (connectionErr) {
+                    _client.close();
+                    reject(connectionErr);
+                } else {
+                    const collection = _client.db('admin').collection('users');
+                    collection.deleteOne({ _id: new ObjectID(userId) }, (_err, _result) => {
+                        if (!_err) {
+                            resolve(_result);
+                            _client.close();
+                        } else {
+                            _client.close();
+                            reject(_err);
+                        }
+                    })
                 }
             })
         });
