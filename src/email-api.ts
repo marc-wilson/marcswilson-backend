@@ -45,12 +45,13 @@ export class EmailApi {
             };
             transporter.sendMail(mailOptions, (error, info) => {
                 if (error) {
+                    console.log('error', error);
+                    console.log('info', info);
                     reject(error);
                 } else {
                     resolve(info);
                 }
             });
-            resolve();
         });
     }
 }
