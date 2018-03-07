@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "vsts-agent": "../../vsts-agent/run.sh"
+    "vsts-agent": "../../vsts-agent/run.sh",
+    "mongo": "mongod"
   },
   "author": "",
   "license": "ISC",

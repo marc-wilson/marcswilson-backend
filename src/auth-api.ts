@@ -1,4 +1,3 @@
-
 import { environment } from '../environment';
 import * as CryptoJS from 'crypto-js';
 import { User } from './models/admin/user';
@@ -21,7 +20,7 @@ export class AuthApi {
             }, error => {
                 response.status(500).json(new Error('Invalid username or password.'));
             })
-        })
+        });
 
         module.exports = this.router;
     }
