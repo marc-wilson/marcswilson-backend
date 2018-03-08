@@ -21,7 +21,7 @@ class Server {
         this._app = this._express();
         this._bodyParser = require('body-parser');
         this._path = require('path');
-        this._server = require('https').createServer(this._app);
+        this._server = require('http').createServer(this._app);
         this._io = require('socket.io')(this._server, { serveClient: false });
         this._server.listen(process.env.PORT || 3000);
         this._app.use(this._bodyParser.urlencoded({extended: true}));
