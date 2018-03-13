@@ -1,6 +1,6 @@
-import { environment } from '../environment';
+import { environment } from '../../environment';
 import * as CryptoJS from 'crypto-js';
-import { User } from './models/admin/user';
+import { User } from '../models/admin/user';
 
 export class AuthApi {
     public express: any = null;

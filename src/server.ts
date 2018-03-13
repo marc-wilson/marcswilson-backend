@@ -1,8 +1,8 @@
-import * as MlbStatsApi from './mlb-stats-api';
-import * as PowerballAPI from './powerball-api';
-import * as AuthAPI from './auth-api';
-import * as EmailAPI from './email-api';
-import * as AdminApi from './admin-api';
+import * as MlbStatsApi from './mlb-api/mlb-stats-api';
+import * as PowerballAPI from './powerball-api/powerball-api';
+import * as AuthAPI from './auth-api/auth-api';
+import * as EmailAPI from './email-api/email-api';
+import * as AdminApi from './admin-api/admin-api';
 import { MlbStatsDb } from './modules/mlbstatsdb/mlb-stats-db';
 
 class Server {

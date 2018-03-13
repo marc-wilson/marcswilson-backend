@@ -1,8 +1,8 @@
-import { environment } from '../environment';
+import { environment } from '../../environment';
 import { MongoClient, ObjectID } from 'mongodb';
-import { Database } from './models/admin/database';
-import { Collection } from './models/admin/collection';
-import { User } from './models/admin/user';
+import { Database } from '../models/admin/database';
+import { Collection } from '../models/admin/collection';
+import { User } from '../models/admin/user';
 import * as CryptoJS from 'crypto-js';
 
 export class AdminApi {
