@@ -12,7 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "aws-sdk": "^2.190.0",
+    "aws-sdk": "^2.209.0",
     "body-parser": "^1.17.2",
     "cors": "^2.8.4",
     "crypto-js": "^3.1.9-1",
@@ -20,25 +20,25 @@
     "dotenv": "^4.0.0",
     "download-git-repo": "^1.0.2",
     "exceljs": "^0.6.0",
-    "express": "^4.16.2",
+    "express": "^4.16.3",
     "filereader": "^0.10.3",
     "fs-extra": "^5.0.0",
-    "mongodb": "^2.2.34",
-    "nodemailer": "^4.4.2",
-    "request": "^2.81.0",
+    "mongodb": "^2.2.35",
+    "nodemailer": "^4.6.3",
+    "request": "^2.85.0",
     "socket.io": "^2.0.4"
   },
   "devDependencies": {
     "@types/body-parser": "^1.16.5",
     "@types/crypto-js": "^3.1.38",
     "@types/express": "^4.11.1",
-    "@types/mongodb": "^3.0.5",
-    "@types/socket.io": "^1.4.31",
+    "@types/mongodb": "^3.0.7",
+    "@types/socket.io": "^1.4.32",
     "@types/typescript": "^2.0.0",
-    "copy-webpack-plugin": "^4.3.1",
+    "copy-webpack-plugin": "^4.5.1",
     "grunt": "^1.0.2",
     "grunt-mongoimport": "^0.1.7",
-    "typescript": "^2.7.1",
-    "webpack": "^3.5.6"
+    "typescript": "^2.7.2",
+    "webpack": "^3.11.0"
   }
 }

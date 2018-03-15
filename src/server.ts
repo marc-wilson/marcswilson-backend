@@ -3,6 +3,7 @@ import * as PowerballAPI from './powerball-api/powerball-api';
 import * as AuthAPI from './auth-api/auth-api';
 import * as EmailAPI from './email-api/email-api';
 import * as AdminApi from './admin-api/admin-api';
+import * as MlbChadwickApi from './mlb-api/mlb-chadwick-api';
 import { MlbStatsDb } from './modules/mlbstatsdb/mlb-stats-db';
 
 class Server {
@@ -33,6 +34,7 @@ class Server {
         this._app.use('/auth', AuthAPI);
         this._app.use('/email', EmailAPI);
         this._app.use('/admin', AdminApi);
+        this._app.use('/chadwick', MlbChadwickApi);
         const connections = [];
         this._io.on('connection', (socket) => {
             connections.push(socket);
