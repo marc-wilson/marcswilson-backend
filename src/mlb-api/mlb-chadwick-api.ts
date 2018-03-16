@@ -9,20 +9,18 @@ export class MlbChadwickApi {
         this.express = require('express');
         this.request = require('request');
         this.router = this.express.Router();
-        this.db = new Database('mlbstats');
+        this.db = new Database('mlbstatsdb');
+
         this.router.get('/seasons', async (request, response) => {
             const seasons = await this.getSeasons();
-
+            response.status(200).json(seasons);
         });
 
         module.exports = this.router;
     }
     async getSeasons() {
-        this.db.distinct('players', {});
-    }
-    async test() {
-        const t = await this.db.connect();
-        return t;
+        const docs = await this.db.distinct('teams', 'yearID', {});
+        return docs;
     }
 }
 

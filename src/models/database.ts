@@ -20,14 +20,12 @@ export class Database {
                 }
             });
         });
-
-    }
-    async disconnect() {
-
     }
     async distinct(collectionName: string, key: string, query: any) {
         const client: any = await this.connect();
         const collection = client.collection(collectionName);
+        const seasons = await collection.distinct(key, query);
+        return seasons;
     }
 
 }
