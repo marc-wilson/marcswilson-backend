@@ -15,11 +15,26 @@ export class MlbChadwickApi {
             const seasons = await this.getSeasons();
             response.status(200).json(seasons);
         });
-
+        this.router.get('/teams/:yearID', async (request, response) => {
+            const teams = await this.getTeams(request.params.yearID);
+            response.status(200).json(teams);
+        });
+        this.router.get('/teams/:yearID/:teamID', async (request, response) => {
+            const team = await this.getTeam(request.params.yearID, request.params.teamID);
+            response.status(200).json(team);
+        });
         module.exports = this.router;
     }
     async getSeasons() {
         const docs = await this.db.distinct('teams', 'yearID', {});
+        return docs;
+    }
+    async getTeams(yearID: string) {
+        const docs = await this.db.find('teams', { yearID: yearID });
+        return docs;
+    }
+    async getTeam(yearID: string, teamID: string) {
+        const docs = await this.db.find('teams', { yearID: yearID, teamID: teamID });
         return docs;
     }
 }
