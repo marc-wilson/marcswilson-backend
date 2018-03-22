@@ -23,6 +23,10 @@ export class MlbChadwickApi {
             const team = await this.getTeam(request.params.yearID, request.params.teamID);
             response.status(200).json(team);
         });
+        this.router.get('/ballparks', async (request, response) => {
+            const ballparks = await this.getBallparks();
+            response.status(200).json(ballparks);
+        });
         module.exports = this.router;
     }
     async getSeasons() {
@@ -35,6 +39,10 @@ export class MlbChadwickApi {
     }
     async getTeam(yearID: string, teamID: string) {
         const docs = await this.db.find('teams', { yearID: yearID, teamID: teamID });
+        return docs;
+    }
+    async getBallparks() {
+        const docs = await this.db.find('parks', {});
         return docs;
     }
 }
