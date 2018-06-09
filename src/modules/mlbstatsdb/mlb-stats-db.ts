@@ -193,8 +193,9 @@ export class MlbStatsDb {
         let name = '';
         if (fileName.endsWith('.csv')) {
             fileName = fileName.replace('.csv', '');
-            name = fileName.endsWith('s') ? fileName.toLowerCase() : `${fileName.toLowerCase()}s`;
-            return name;
+            //name = fileName.endsWith('s') ? fileName.toLowerCase() : `${fileName.toLowerCase()}s`;
+            //return name;
+            return fileName.toLowerCase();
         }
         return null;
     }
